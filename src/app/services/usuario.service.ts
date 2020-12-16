@@ -1,9 +1,10 @@
+import { ResponseApi } from './../models/response-api';
 import { Usuario } from 'src/app/models/usuario';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { HOST, TOKEN_NAME, TOKEN_AUTH_USERNAME, TOKEN_AUTH_PASSWORD } from './../shared/var.constant';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -17,11 +18,33 @@ export class UsuarioService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
+  getByCorreo(correo:string){
+    return this.http.get<Usuario>(`${this.url}/findByCorreo/${correo}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
   getUsers() {
     return this.http.get<Usuario[]>(`${this.url}/list`)
     .pipe(
       catchError(this.handleError)
     );
+  }
+
+  save(x: Usuario){
+    return this.http.post<ResponseApi>(`${this.url}/save`,x)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  sendEmail(correo:string){
+    let parms = new HttpParams();
+    parms = parms.append('correo',correo);
+    return this.http.get<ResponseApi>(`${this.url}/sendEmail`,
+    {
+      params:parms
+    })
   }
 
 
@@ -55,7 +78,7 @@ export class UsuarioService {
       console.log('Error:', error.error);
     }
     //catch and rethrow
-    return throwError('Usuario o clave invalidas');
+    return throwError(error.error.message);
 
   }
 }

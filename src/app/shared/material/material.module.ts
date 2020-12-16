@@ -27,6 +27,7 @@ import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-
 import {NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
 import {NgxMatTimepickerModule}  from '@angular-material-components/datetime-picker';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 
@@ -60,7 +61,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatStepperModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
-    NgxMatTimepickerModule
+    NgxMatTimepickerModule,
+    MatRadioModule
 
   ],
   exports: [
@@ -88,7 +90,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatStepperModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
-    NgxMatTimepickerModule
+    NgxMatTimepickerModule,
+    MatRadioModule
   ],
  providers: [
     {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {strict: true}},

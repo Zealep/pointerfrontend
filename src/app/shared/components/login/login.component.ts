@@ -48,9 +48,14 @@ export class LoginComponent implements OnInit {
       )
     .subscribe(data =>{
       if(data){
-        let token = JSON.stringify(data);
+        this.usuarioService.getByCorreo(user.correo)
+        .subscribe(result =>{
+          let token = JSON.stringify(data);
         sessionStorage.setItem(TOKEN_NAME, token);
+        sessionStorage.setItem('ID-USER',result.idUsuarioWeb)
         this.router.navigate(['pages']);
+        })
+
       }
     });
 

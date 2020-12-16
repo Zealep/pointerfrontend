@@ -1,0 +1,274 @@
+<mat-card class="container">
+  <mat-card-header>
+    Datos personales del postulante
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <div class="form-container">
+
+        <mat-form-field>
+          <mat-label>Tipo de documento</mat-label>
+          <mat-select formControlName="tipoDocumento" required>
+            <mat-option *ngFor="let t of tiposDocumento" [value]="t.idTipoDocumentoIdentidad">
+              {{t.glsTipoDocumentoIdentidad}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Numero de documento</mat-label>
+          <input matInput formControlName="numeroDocumento" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Apellido Paterno</mat-label>
+          <input matInput formControlName="apellidoPaterno" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Apellido Materno</mat-label>
+          <input matInput formControlName="apellidoMaterno" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nombres</mat-label>
+          <input matInput formControlName="nombres" requred>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Sexo</mat-label>
+          <mat-select formControlName="idDatoGenero" required>
+            <mat-option *ngFor="let s of sexo" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Estado civil</mat-label>
+          <mat-select formControlName="idDatoEstadoCivil" required>
+            <mat-option *ngFor="let s of estadoCivil" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Pais Nacimiento</mat-label>
+          <mat-select formControlName="idDatoPaisNacimiento" (ngModelChange)="onSelectPaisNacimiento($event)" required>
+            <mat-option *ngFor="let s of pais" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Departamento Nacimiento</mat-label>
+          <mat-select formControlName="idDptoNacimiento" (ngModelChange)="onSelectDepartamentoNacimiento($event)" required>
+            <mat-option *ngFor="let s of departamentoNacimiento" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Provincia Nacimiento</mat-label>
+          <mat-select formControlName="idProvNacimiento" (ngModelChange)="onSelectProvinciaNacimiento($event)" required>
+            <mat-option *ngFor="let s of provinciaNacimiento" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Distrito Nacimiento</mat-label>
+          <mat-select formControlName="idDistNacimiento" required>
+            <mat-option *ngFor="let s of distritoNacimiento" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Pais Residencia</mat-label>
+          <mat-select formControlName="idDatoPaisResidencia" (ngModelChange)="onSelectPaisResidencia($event)" required>
+            <mat-option *ngFor="let s of pais" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Departamento Residencia</mat-label>
+          <mat-select formControlName="idDptoResidencia" (ngModelChange)="onSelectDepartamentoResidencia($event)" required>
+            <mat-option *ngFor="let s of departamentoResidencia" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Provincia Residencia</mat-label>
+          <mat-select formControlName="idProvResidencia" (ngModelChange)="onSelectProvinciaResidencia($event)" required>
+            <mat-option *ngFor="let s of provinciaResidencia" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Distrito Residencia</mat-label>
+          <mat-select formControlName="idDisResidencia" required>
+            <mat-option *ngFor="let s of distritoResidencia" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Tipo Via</mat-label>
+          <mat-select formControlName="iddatoSunatTipoVia">
+            <mat-option *ngFor="let s of tipoVia" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <mat-label>Nombre via</mat-label>
+          <input matInput formControlName="nombreVia">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Numero via</mat-label>
+          <input matInput formControlName="numeroVia">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Interior</mat-label>
+          <input matInput formControlName="interior">
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <mat-label>Tipo Zona</mat-label>
+          <mat-select formControlName="iddatoSunatTipoZona">
+            <mat-option *ngFor="let s of tipoZona" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nombre Zona</mat-label>
+          <input matInput formControlName="nombreZona">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Referencia</mat-label>
+          <input matInput formControlName="referencia">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Telefono Fijo</mat-label>
+          <input matInput formControlName="telefonoFijo" type="number">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Telefono Movi</mat-label>
+          <input matInput formControlName="telefonoMovil" type="number">
+        </mat-form-field>
+
+          <mat-label>Acepta uso de datos personales?</mat-label>
+          <mat-radio-group formControlName="indAceptoDatosPersonales">
+            <mat-radio-button value="S">Si</mat-radio-button>
+            <mat-radio-button value="N">No</mat-radio-button>
+          </mat-radio-group>
+
+          <mat-label>Acepta viajar al exterior?</mat-label>
+          <mat-radio-group formControlName="indDispViajarInterior">
+            <mat-radio-button value="S">Si</mat-radio-button>
+            <mat-radio-button value="N">No</mat-radio-button>
+          </mat-radio-group>
+
+
+          <mat-label>Acepta viajar al interior?</mat-label>
+          <mat-radio-group formControlName="indDispViajarExterior">
+            <mat-radio-button value="S">Si</mat-radio-button>
+            <mat-radio-button value="N">No</mat-radio-button>
+          </mat-radio-group>
+
+
+          <mat-label>Tiene disponibilidad inmediata?</mat-label>
+          <mat-radio-group formControlName="indDispInmediata">
+            <mat-radio-button value="S">Si</mat-radio-button>
+            <mat-radio-button value="N">No</mat-radio-button>
+          </mat-radio-group>
+
+          <mat-form-field *ngIf="form.value.indDispInmediata == 'N'">
+            <mat-label>Timpo de disponibilidad</mat-label>
+            <input matInput formControlName="tiempoDisponibilidad">
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-label>Cargo</mat-label>
+            <mat-select formControlName="idCargo">
+              <mat-option *ngFor="let s of cargo" [value]="s.cod">
+                {{s.des}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Expectativa Salarial</mat-label>
+            <input matInput formControlName="expectativaSalarial" type="number">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Motivo que se entero</mat-label>
+            <mat-select formControlName="idMedioInformativo">
+              <mat-option *ngFor="let s of motivoEntero" [value]="s.cod">
+                {{s.des}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-label>Tiene discapacidad?</mat-label>
+          <mat-radio-group formControlName="indTieneDiscapacidad">
+            <mat-radio-button value="S">Si</mat-radio-button>
+            <mat-radio-button value="N">No</mat-radio-button>
+          </mat-radio-group>
+
+          <mat-form-field>
+            <mat-label>Numero de conadis</mat-label>
+            <input matInput formControlName="numeroConadis">
+          </mat-form-field>
+
+
+
+
+
+
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-stroked-button color="primary" (click)="grabar()">
+      Registrar
+    </button>
+
+    <button mat-stroked-button color="accent" (click)="cancelar()">
+      Cancelar
+    </button>
+
+  </mat-card-actions>
+</mat-card>

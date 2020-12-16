@@ -7,17 +7,17 @@
       <div class="form-container">
         <mat-form-field>
           <mat-label>Apellido Paterno</mat-label>
-          <input matInput formControlName="apellidoPaterno">
+          <input matInput formControlName="apellidoPaterno" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Apellido Materno</mat-label>
-          <input matInput formControlName="apellidoMaterno">
+          <input matInput formControlName="apellidoMaterno" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Nombres</mat-label>
-          <input matInput formControlName="nombres">
+          <input matInput formControlName="nombres" required>
         </mat-form-field>
 
         <mat-form-field>
@@ -31,28 +31,28 @@
 
         <mat-form-field>
           <mat-label>Numero de documento</mat-label>
-          <input matInput formControlName="numeroDocumento">
+          <input matInput formControlName="numeroDocumento" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Correo</mat-label>
-          <input matInput type="email" formControlName="correo">
+          <input matInput type="email" formControlName="correo" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Contraseña</mat-label>
-          <input matInput type="password" formControlName="contraseña">
+          <input matInput type="password" formControlName="contraseña" required>
         </mat-form-field>
 
       </div>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button color="primary">
+    <button mat-stroked-button color="primary" [disabled]="form.invalid" (click)="grabar()">
       Registrar
     </button>
 
-    <button mat-stroked-button color="accent">
+    <button mat-stroked-button color="accent" (click)="cancelar()">
       Cancelar
     </button>
 

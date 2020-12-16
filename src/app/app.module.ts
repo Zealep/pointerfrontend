@@ -10,12 +10,14 @@ import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@ang
 import es from '@angular/common/locales/es';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
+import { PagesComponent } from './pages/pages.component';
 
 registerLocaleData(es);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PagesComponent
   ],
   imports: [
     BrowserModule,

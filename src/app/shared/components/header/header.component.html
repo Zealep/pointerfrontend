@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <a [routerLink]="'/pages/datos-personales'">
+      <h1>POINTERWEB</h1>
+    </a>
+    <span class="menu-spacer"></span>
+
+    <button mat-button *ngFor="let m of menus" [routerLink]="'/pages'+m.urlOperacion">
+      {{m.nombreMenuWeb}}
+    </button>
+
+  </mat-toolbar-row>
+
+</mat-toolbar>

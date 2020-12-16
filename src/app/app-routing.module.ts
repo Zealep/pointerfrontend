@@ -1,3 +1,4 @@
+import { RestorePassComponent } from './shared/components/login/restore-pass/restore-pass.component';
 import { AltaUserComponent } from './shared/components/login/alta-user/alta-user.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,10 +15,18 @@ const routes: Routes = [
     component: AltaUserComponent
   },
   {
+    path: 'restore-pass',
+    component: RestorePassComponent
+  },
+  {
     path: '',
     pathMatch: 'full',
     component: LoginComponent
   },
+  {
+    path: 'pages',
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+  }
 ];
 
 @NgModule({
