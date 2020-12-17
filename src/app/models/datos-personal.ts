@@ -1,3 +1,4 @@
+import { AreaInteres } from './area-interes';
 import { TipoDocumentoService } from './../services/tipo-documento.service';
 import { TipoDocumento } from './TipoDocumento';
 export class DatosPersonal{
@@ -40,6 +41,6 @@ export class DatosPersonal{
   idMedioInformativo: string;
   indTieneDiscapacidad: string;
   numeroConadis: number;
-
+  areaInteres: AreaInteres[];
 
 }

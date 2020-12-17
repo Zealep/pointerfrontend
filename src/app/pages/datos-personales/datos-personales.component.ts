@@ -1,3 +1,4 @@
+import { AreaInteres } from './../../models/area-interes';
 import { MenuService } from './../../services/menu.service';
 import { Combo } from './../../models/dto/combo';
 import { DatosPersonalService } from './../../services/datos-personal.service';
@@ -31,6 +32,7 @@ export class DatosPersonalesComponent implements OnInit {
   provinciaResidencia: Combo[] = [];
   distritoResidencia: Combo[] = [];
   idUserWeb: string;
+  areas: Combo[] = [];
 
 
   tipoVia: Combo[] = [];
@@ -76,7 +78,8 @@ export class DatosPersonalesComponent implements OnInit {
     expectativaSalarial: new FormControl(''),
     idMedioInformativo: new FormControl(''),
     indTieneDiscapacidad: new FormControl(''),
-    numeroConadis: new FormControl('')
+    numeroConadis: new FormControl(''),
+    areasInteres: new FormControl('')
   });
 
 
@@ -100,6 +103,7 @@ export class DatosPersonalesComponent implements OnInit {
     this.getMotivoEntero();
     this.getCargo();
     this.cargar();
+    this.getAreas();
   }
   onSelectPaisNacimiento(dato: string) {
     this.getDepartamentoNacimiento(dato);
@@ -215,6 +219,12 @@ export class DatosPersonalesComponent implements OnInit {
     });
   }
 
+  getAreas(){
+    this.menuService.getAreas().subscribe(data => {
+      this.areas = data
+    });
+  }
+
   cargar() {
     this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
       .pipe(
@@ -226,6 +236,21 @@ export class DatosPersonalesComponent implements OnInit {
         })
       )
       .subscribe(dato => {
+        console.log(dato);
+
+        let areas: string[] = [];
+        dato.areaInteres.forEach(function(value){
+          areas.push(value.idAreaAspira);
+        });
+        this.onSelectPaisNacimiento(dato.idDatoPaisNacimiento);
+        this.onSelectDepartamentoNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento);
+        this.onSelectProvinciaNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento+dato.idProvNacimiento);
+
+        this.onSelectPaisResidencia(dato.idDatoPaisResidencia);
+        this.onSelectDepartamentoResidencia(dato.idDatoPaisResidencia+dato.idDptoResidencia);
+        this.onSelectProvinciaResidencia(dato.idDatoPaisResidencia+dato.idDptoResidencia+dato.idProvResidencia);
+
+
         this.form = new FormGroup({
           'tipoDocumento': new FormControl(dato.tipoDocumentosIdentidad.idTipoDocumentoIdentidad),
           'numeroDocumento': new FormControl(dato.numeroDocumento),
@@ -261,7 +286,8 @@ export class DatosPersonalesComponent implements OnInit {
           'expectativaSalarial': new FormControl(dato.expectativaSalarial),
           'idMedioInformativo': new FormControl(dato.idMedioInformativo),
           'indTieneDiscapacidad': new FormControl(dato.indTieneDiscapacidad),
-          'numeroConadis': new FormControl(dato.numeroConadis)
+          'numeroConadis': new FormControl(dato.numeroConadis),
+          'areasInteres': new FormControl(areas)
         });
       })
   }
@@ -316,6 +342,17 @@ export class DatosPersonalesComponent implements OnInit {
     datos.indTieneDiscapacidad = this.form.get('indTieneDiscapacidad').value;
     datos.numeroConadis = this.form.get('numeroConadis').value;
 
+    let areas : AreaInteres [] = [];
+    let idAreas = this.form.get('areasInteres').value
+
+    idAreas.forEach(function (value) {
+      let a = new AreaInteres();
+      a.idAreaAspira = value;
+      areas.push(a);
+    });
+    datos.areaInteres = areas;
+
+
     this.datosPersonalService.save(datos)
       .pipe(
         catchError(response => {
@@ -332,6 +369,11 @@ export class DatosPersonalesComponent implements OnInit {
         });
 
       });
+
+  }
+
+  loadAreas(){
+
   }
   clear() {
     this.form.reset();
@@ -339,6 +381,8 @@ export class DatosPersonalesComponent implements OnInit {
 
   cancelar() {
     this.router.navigate(['/pages']);
+
+
   }
 
 

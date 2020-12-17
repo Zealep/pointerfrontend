@@ -147,6 +147,18 @@ export class MenuService {
     );
   }
 
+  getAreas(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'AREA'
+    req.dato = ''
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if(error.error instanceof ErrorEvent) {
       console.log('Client error', error.error.message);
