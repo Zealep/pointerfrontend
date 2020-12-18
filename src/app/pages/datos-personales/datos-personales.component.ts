@@ -1,8 +1,10 @@
+import { DiscapacidadService } from './../../services/discapacidad.service';
+import { AreaInteresService } from './../../services/area-interes.service';
 import { AreaInteres } from './../../models/area-interes';
 import { MenuService } from './../../services/menu.service';
 import { Combo } from './../../models/dto/combo';
 import { DatosPersonalService } from './../../services/datos-personal.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, concatMap } from 'rxjs/operators';
 import { Usuario } from 'src/app/models/usuario';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,8 +13,11 @@ import { UsuarioService } from './../../services/usuario.service';
 import { TipoDocumentoService } from './../../services/tipo-documento.service';
 import { Component, OnInit } from '@angular/core';
 import { TipoDocumento } from 'src/app/models/TipoDocumento';
-import { EMPTY } from 'rxjs';
+import { EMPTY, forkJoin, Observable } from 'rxjs';
 import { DatosPersonal } from 'src/app/models/datos-personal';
+import { Discapacidad } from 'src/app/models/discapacidad';
+import { from } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-datos-personales',
@@ -33,6 +38,12 @@ export class DatosPersonalesComponent implements OnInit {
   distritoResidencia: Combo[] = [];
   idUserWeb: string;
   areas: Combo[] = [];
+  discapacidades: Combo[] = [];
+  areasPostulante: AreaInteres[]=[];
+  discapacidadPostulante: Discapacidad[]=[];
+  displayedColumns: string[] = ['nombre','acciones'];
+
+  dataAreas: MatTableDataSource<AreaInteres>;
 
 
   tipoVia: Combo[] = [];
@@ -89,7 +100,9 @@ export class DatosPersonalesComponent implements OnInit {
     private datosPersonalService: DatosPersonalService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private areaInteresService: AreaInteresService,
+    private discapacidadService: DiscapacidadService) { }
 
   ngOnInit(): void {
     this.idUserWeb = sessionStorage.getItem('ID-USER');
@@ -102,6 +115,8 @@ export class DatosPersonalesComponent implements OnInit {
     this.getTipoZona();
     this.getMotivoEntero();
     this.getCargo();
+    this.getAreasByPostulante();
+    //this.getDiscapacidadByPostulante();
     this.cargar();
     this.getAreas();
   }
@@ -225,7 +240,25 @@ export class DatosPersonalesComponent implements OnInit {
     });
   }
 
+  getAreasByPostulante(){
+    this.areaInteresService.getAreasInteres(this.idUserWeb)
+    .subscribe(datos =>{
+      console.log(datos);
+      this.dataAreas = new MatTableDataSource(datos);
+        this.areasPostulante = datos;
+    })
+  }
+
+  getDiscapacidadByPostulante(){
+    this.discapacidadService.getDiscapacidades(this.idUserWeb)
+    .subscribe(datos =>{
+        this.discapacidadPostulante = datos;
+    })
+  }
+
+
   cargar() {
+
     this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
       .pipe(
         catchError(error => {
@@ -239,9 +272,10 @@ export class DatosPersonalesComponent implements OnInit {
         console.log(dato);
 
         let areas: string[] = [];
-        dato.areaInteres.forEach(function(value){
+        this.areasPostulante.forEach(function(value){
           areas.push(value.idAreaAspira);
         });
+
         this.onSelectPaisNacimiento(dato.idDatoPaisNacimiento);
         this.onSelectDepartamentoNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento);
         this.onSelectProvinciaNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento+dato.idProvNacimiento);
@@ -341,17 +375,6 @@ export class DatosPersonalesComponent implements OnInit {
     datos.idMedioInformativo = this.form.get('idMedioInformativo').value;
     datos.indTieneDiscapacidad = this.form.get('indTieneDiscapacidad').value;
     datos.numeroConadis = this.form.get('numeroConadis').value;
-
-    let areas : AreaInteres [] = [];
-    let idAreas = this.form.get('areasInteres').value
-
-    idAreas.forEach(function (value) {
-      let a = new AreaInteres();
-      a.idAreaAspira = value;
-      areas.push(a);
-    });
-    datos.areaInteres = areas;
-
 
     this.datosPersonalService.save(datos)
       .pipe(
