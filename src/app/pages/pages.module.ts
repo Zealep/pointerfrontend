@@ -6,11 +6,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatosPersonalesComponent } from './datos-personales/datos-personales.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ExperienciaLaboralComponent } from './experiencia-laboral/experiencia-laboral.component';
+import { FormComponent } from './experiencia-laboral/form/form.component';
 
 
 
 @NgModule({
-  declarations: [DatosPersonalesComponent],
+  declarations: [DatosPersonalesComponent, ExperienciaLaboralComponent, FormComponent],
   imports: [
     CommonModule,
     FormsModule,
