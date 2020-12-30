@@ -11,6 +11,7 @@ import es from '@angular/common/locales/es';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { PagesComponent } from './pages/pages.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 registerLocaleData(es);
 
@@ -25,7 +26,8 @@ registerLocaleData(es);
     AppRoutingModule,
     SharedModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule
   ],
   providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService],

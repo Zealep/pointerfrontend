@@ -8,11 +8,12 @@ import { RouterModule } from '@angular/router';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { AltaUserComponent } from './components/login/alta-user/alta-user.component';
 import { RestorePassComponent } from './components/login/restore-pass/restore-pass.component';
+import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, HeaderComponent, ConfirmDialogComponent, AltaUserComponent, RestorePassComponent],
+  declarations: [LoginComponent, HeaderComponent, ConfirmDialogComponent, AltaUserComponent, RestorePassComponent, UploadFilesComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -21,7 +22,8 @@ import { RestorePassComponent } from './components/login/restore-pass/restore-pa
   ],
   exports: [
     HeaderComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    UploadFilesComponent
   ],
   entryComponents: [ConfirmDialogComponent]
 

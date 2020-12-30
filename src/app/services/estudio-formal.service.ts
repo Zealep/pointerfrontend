@@ -1,38 +1,51 @@
-import { ResponseApi } from '../models/response-api';
+import { EstudioFormal } from '../models/estudio-formal';
 import { catchError } from 'rxjs/operators';
 import { HOST } from '../shared/var.constant';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import { AreaInteres } from '../models/area-interes';
+import { ResponseApi } from '../models/response-api';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AreaInteresService {
+export class EstudioFormalService {
 
-  private url: string = `${HOST}/areaInteres`;
+  private url: string = `${HOST}/edu-formal`;
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
-
-  getAreasInteres(id:String) {
-    return this.http.get<AreaInteres[]>(`${this.url}/findByPostulante/${id}`)
+  getEstudiosFormal() {
+    return this.http.get<EstudioFormal[]>(`${this.url}/list`)
     .pipe(
       catchError(this.handleError)
     );
   }
 
-  save(a : AreaInteres) {
-    return this.http.post<ResponseApi>(`${this.url}/save`,a)
+  getEstudiosFormalByPostulante(id: string) {
+    return this.http.get<EstudioFormal[]>(`${this.url}/findByPostulante/${id}`)
     .pipe(
       catchError(this.handleError)
     );
   }
 
-  delete(id:string) {
+  getEstudioFormalById(id: string){
+    return this.http.get<EstudioFormal>(`${this.url}/find/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  save(x: EstudioFormal){
+    return this.http.post<EstudioFormal>(`${this.url}/save`,x)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  delete(id: string){
     return this.http.delete<ResponseApi>(`${this.url}/delete/${id}`)
     .pipe(
       catchError(this.handleError)
@@ -49,7 +62,7 @@ export class AreaInteresService {
       console.log('Error:', error.error);
     }
     //catch and rethrow
-    return throwError(error.error.message);
+    return throwError('Usuario o clave invalidas');
 
   }
 }

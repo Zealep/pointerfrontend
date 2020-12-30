@@ -1,0 +1,31 @@
+<div *ngFor="let progressInfo of progressInfos" class="mb-2">
+  <span>{{ progressInfo.fileName }}</span>
+  <mat-progress-bar mode="determinate" value="{{progressInfo.percentage }}%"
+      attr.aria-valuenow="{{ progressInfo.percentage }}" aria-valuemin="0" aria-valuemax="100"
+      [ngStyle]="{ width: progressInfo.percentage + '%' }">
+   </mat-progress-bar>
+</div>
+
+<button mat-raised-button color="primary" (click)="fileInput.click()">
+  <input #fileInput type="file" accept="application/pdf" multiple (change)="selectFiles($event)"
+    style="display:none;" />
+  <mat-icon>file_upload</mat-icon>
+  Cargar imagenes
+</button>
+
+<div>{{ message }}</div>
+<mat-card>
+  <mat-card-header>
+    Imagenes subidas
+  </mat-card-header>
+  <mat-card-content>
+    <ul  *ngFor="let file of fileInfos | async">
+      <li>
+        <p><a href="{{ file.url }}">{{ file.name }}</a></p>
+        <img src="{{ file.url }}" alt="{{ file.name }}" height="80px">
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>
+
+

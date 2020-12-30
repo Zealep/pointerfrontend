@@ -24,6 +24,13 @@ export class ExperienciaLaboralService {
     );
   }
 
+  getExperienciasByPostulante(id: string) {
+    return this.http.get<ExperienciaLaboral[]>(`${this.url}/findByPostulante/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getExperienciaById(id: string){
     return this.http.get<ExperienciaLaboral>(`${this.url}/find/${id}`)
     .pipe(
@@ -32,7 +39,7 @@ export class ExperienciaLaboralService {
   }
 
   save(x: ExperienciaLaboral){
-    return this.http.post<ExperienciaLaboral>(`${this.url}/save`,x)
+    return this.http.post<ResponseApi>(`${this.url}/save`,x)
     .pipe(
       catchError(this.handleError)
     );

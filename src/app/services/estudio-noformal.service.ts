@@ -1,38 +1,52 @@
-import { ResponseApi } from '../models/response-api';
+import { EstudioNoFormal } from './../models/estudio-noformal';
+import { EstudioFormal } from '../models/estudio-formal';
 import { catchError } from 'rxjs/operators';
 import { HOST } from '../shared/var.constant';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import { AreaInteres } from '../models/area-interes';
+import { ResponseApi } from '../models/response-api';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AreaInteresService {
+export class EstudioNoFormalService {
 
-  private url: string = `${HOST}/areaInteres`;
+  private url: string = `${HOST}/edu-noformal`;
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
-
-  getAreasInteres(id:String) {
-    return this.http.get<AreaInteres[]>(`${this.url}/findByPostulante/${id}`)
+  getEstudiosNoFormal() {
+    return this.http.get<EstudioNoFormal[]>(`${this.url}/list`)
     .pipe(
       catchError(this.handleError)
     );
   }
 
-  save(a : AreaInteres) {
-    return this.http.post<ResponseApi>(`${this.url}/save`,a)
+  getEstudiosNoFormalByPostulante(id: string) {
+    return this.http.get<EstudioNoFormal[]>(`${this.url}/findByPostulante/${id}`)
     .pipe(
       catchError(this.handleError)
     );
   }
 
-  delete(id:string) {
+  getEstudioNoFormalById(id: string){
+    return this.http.get<EstudioNoFormal>(`${this.url}/find/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  save(x: EstudioNoFormal){
+    return this.http.post<EstudioNoFormal>(`${this.url}/save`,x)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  delete(id: string){
     return this.http.delete<ResponseApi>(`${this.url}/delete/${id}`)
     .pipe(
       catchError(this.handleError)
@@ -49,7 +63,7 @@ export class AreaInteresService {
       console.log('Error:', error.error);
     }
     //catch and rethrow
-    return throwError(error.error.message);
+    return throwError('Usuario o clave invalidas');
 
   }
 }

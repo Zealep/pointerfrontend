@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ExperienciaLaboralService } from 'src/app/services/experiencia-laboral.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogModel } from 'src/app/shared/models/confirm-dialog-model';
@@ -13,30 +13,33 @@ import { ConfirmDialogModel } from 'src/app/shared/models/confirm-dialog-model';
 @Component({
   selector: 'app-experiencia-laboral',
   templateUrl: './experiencia-laboral.component.html',
-  styles: []
+  styleUrls: ['./experiencia-laboral.component.css']
 })
 export class ExperienciaLaboralComponent implements OnInit {
 
   experiencias: ExperienciaLaboral[] = [];
-  displayedColumns:string[] = ['idExpLaboral', 'empresa', 'fechaIngreso','fechaRetiro','acciones'];
+  displayedColumns:string[] = ['empresa', 'fechaIngreso','fechaRetiro','acciones'];
   dataSource: MatTableDataSource<ExperienciaLaboral>;
+  idUserWeb: string;
 
-  
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private experienciaService: ExperienciaLaboralService,
-    private snackBar: MatSnackBar, 
+    private snackBar: MatSnackBar,
     public route: ActivatedRoute ,
+    private router: Router,
     private dialog: MatDialog) { }
     ngOnInit(): void {
+      this.idUserWeb = sessionStorage.getItem('ID-USER');
       this.loadExperiencias();
      }
       applyFilter(event: Event) {
        const filterValue = (event.target as HTMLInputElement).value;
        this.dataSource.filter = filterValue.trim().toLowerCase();
      }
-   
+
      delete(exp: ExperienciaLaboral) {
        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
          maxWidth: '600px',
@@ -45,7 +48,7 @@ export class ExperienciaLaboralComponent implements OnInit {
            message: 'Deseas borrar la exp. laboral?'
          }
        });
-   
+
        dialogRef.afterClosed()
          .subscribe(result => {
            if(result) {
@@ -53,18 +56,18 @@ export class ExperienciaLaboralComponent implements OnInit {
            }
          });
      }
-   
+
      private loadExperiencias(){
-       this.experienciaService.getExperiencias().subscribe(data => {
+       this.experienciaService.getExperienciasByPostulante(this.idUserWeb).subscribe(data => {
          let experiencias = JSON.parse(JSON.stringify(data));
          this.dataSource = new MatTableDataSource(experiencias);
          this.dataSource.paginator = this.paginator;
-         this.dataSource.sort = this.sort;    
+         this.dataSource.sort = this.sort;
        });
      }
-   
+
      private sendDeleteRequest(exp: ExperienciaLaboral) {
-       this.experienciaService.delete(exp.idExpLaboral)
+       this.experienciaService.delete(exp.idExperienciaLaboral)
        .subscribe(response => {
          this.loadExperiencias();
          this.snackBar.open('Experiencia Laboral eliminada', 'Close', {
@@ -72,5 +75,9 @@ export class ExperienciaLaboralComponent implements OnInit {
          });
        });
      }
-  
+
+     callEdit(id: number){
+      this.router.navigate(['/pages/exp-laboral/form',{exp:id}]);
+    }
+
 }

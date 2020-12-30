@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ConfirmDialogModel } from 'src/app/shared/models/confirm-dialog-model';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfirmDialogComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
-  }
+  constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public model: ConfirmDialogModel) { }
+
+ngOnInit() {
+}
+
+yes() {
+this.dialogRef.close(true);
+}
+
+no() {
+this.dialogRef.close(false);
+}
 
 }
