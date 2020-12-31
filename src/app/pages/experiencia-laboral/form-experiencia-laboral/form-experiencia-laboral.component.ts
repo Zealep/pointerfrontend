@@ -32,6 +32,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
   idPostulante: string;
   idExperiencia: string;
   archivo = new DatoArchivo();
+  idProceso = '00024';
 
   @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
 

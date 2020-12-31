@@ -1,6 +1,8 @@
+import { Documentos } from './documentos';
+
 export class ProcesoDocumento{
   idProcesoDocumento: string;
-  idDocumento: string;
+  documentos: Documentos;
   idProceso: string;
   estado: string;
 }

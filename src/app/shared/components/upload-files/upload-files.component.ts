@@ -5,6 +5,7 @@ import { UploadFileService } from './../../../services/upload-file.service';
 import { Observable } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { UploadDocument } from 'src/app/models/dto/upload-document';
 
 @Component({
   selector: 'app-upload-files',
@@ -16,9 +17,10 @@ export class UploadFilesComponent implements OnInit {
   @Input() id: string;
   @Input() idProceso: string;
   tiposDocumento: ProcesoDocumento[];
-  selectedFiles: FileList;
-  progressInfos = [];
+  filesUpload: Array<File> = [];
+  cargarArchivos: UploadDocument[] = [];
   message = '';
+  idTipoDocumento:string = '';
 
   fileInfos: Observable<any>;
 
@@ -26,48 +28,46 @@ export class UploadFilesComponent implements OnInit {
     private procesoDocumentoService: ProcesoDocumentoService) { }
 
   ngOnInit(): void {
-
+    this.getProcesosDocumentos();
   }
 
   getProcesosDocumentos(){
+    console.log('idProceso',this.idProceso)
     this.procesoDocumentoService.getByProceso(this.idProceso)
     .subscribe(result =>{
+      console.log('result',result);
       this.tiposDocumento = result;
     })
   }
 
   selectFiles(event) {
-    this.progressInfos = [];
     const files = event.target.files;
-    this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles);
-
+    for(let i=0;i<files.length;i++){
+      let up = new UploadDocument();
+      up.archivo = files[i];
+      up.tipoDocumento = this.idTipoDocumento;
+      this.cargarArchivos.push(up);
+    }
+    
   }
 
   uploadFiles(archivo:DatoArchivo) {
     console.log('archivo ',archivo.idCodigoRelacional)
     this.message = '';
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.upload(i, this.selectedFiles[i],archivo);
+    for (let i = 0; i < this.filesUpload.length; i++) {
+      this.upload(i, this.filesUpload[i],archivo);
     }
   }
 
   upload(idx, file,archivo) {
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
     const formData: FormData = new FormData();
     formData.append('file',file)
     formData.append('archivo',JSON.stringify(archivo));
 
     this.uploadService.upload(formData).subscribe(
       event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progressInfos[idx].percentage = Math.round(100 * event.loaded / event.total);
-        } else if (event instanceof HttpResponse) {
-          this.fileInfos = this.uploadService.getFiles();
-        }
       },
       err => {
-        this.progressInfos[idx].percentage = 0;
         this.message = 'No se pudo subir el archivo:' + file.name;
       });
   }
