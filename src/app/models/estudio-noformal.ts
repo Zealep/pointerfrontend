@@ -5,13 +5,14 @@ export class EstudioNoFormal{
   idDatoModalidadAcademica: string;
   idDatoNombreEstudio: string;
   nombreEstudioEspecifico: string;
+  idDatoCentroEstudio:string;
   nombreCentroEstudio: string;
   idDatoPais: string;
   idDpto: string;
   idProv: string;
   idDist: string;
   tiempoEstudiado: number;
-  idDatoTiempoUnidad: string;
+  idDatoUnidadTiempo: string;
   promedioPonderado: number;
   fechaInicio: Date;
   fechaFin: Date;

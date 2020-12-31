@@ -235,7 +235,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
       .subscribe(result => {
         console.log('result',result)
 
-        this.archivo.idPostulante = this.idUserWeb;
+        //this.archivo.idPostulante = this.idUserWeb;
         this.archivo.idCodigoRelacional = result.idEntity
         this.archivo.idProceso = '00025'
         this.upload.uploadFiles(this.archivo);

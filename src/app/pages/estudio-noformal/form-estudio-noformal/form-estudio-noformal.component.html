@@ -30,6 +30,15 @@
         </mat-form-field>
 
         <mat-form-field>
+          <mat-label>Tipo centro de estudio</mat-label>
+          <mat-select formControlName="tipoCentroEstudio">
+            <mat-option *ngFor="let t of tiposCentroEstudio" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
           <mat-label>Nombre del centro de estudios</mat-label>
           <input matInput formControlName="nombreCentro">
         </mat-form-field>

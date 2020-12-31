@@ -1,7 +1,9 @@
+import { ProcesoDocumento } from './../../../models/proceso-documento';
+import { ProcesoDocumentoService } from './../../../services/proceso-documento.service';
 import { DatoArchivo } from './../../../models/dato-archivo';
 import { UploadFileService } from './../../../services/upload-file.service';
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -11,15 +13,27 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 })
 export class UploadFilesComponent implements OnInit {
 
+  @Input() id: string;
+  @Input() idProceso: string;
+  tiposDocumento: ProcesoDocumento[];
   selectedFiles: FileList;
   progressInfos = [];
   message = '';
 
   fileInfos: Observable<any>;
 
-  constructor(private uploadService: UploadFileService) { }
+  constructor(private uploadService: UploadFileService,
+    private procesoDocumentoService: ProcesoDocumentoService) { }
 
   ngOnInit(): void {
+
+  }
+
+  getProcesosDocumentos(){
+    this.procesoDocumentoService.getByProceso(this.idProceso)
+    .subscribe(result =>{
+      this.tiposDocumento = result;
+    })
   }
 
   selectFiles(event) {

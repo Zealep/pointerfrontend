@@ -20,6 +20,7 @@ export class FormEstudioNoFormalComponent implements OnInit {
   tiposModalidad: Combo[] = []
   tiposEstudio: Combo[] = []
   tiposTiempo: Combo[] = []
+  tiposCentroEstudio: Combo[] = []
   pais: Combo[] = [];
   departamento: Combo[] = [];
   provincia: Combo[] = [];
@@ -33,6 +34,7 @@ export class FormEstudioNoFormalComponent implements OnInit {
     modalidad: new FormControl(''),
     tipoEstudio: new FormControl(''),
     nombre: new FormControl(''),
+    tipoCentroEstudio: new FormControl(''),
     nombreCentro: new FormControl(''),
     idDatoPais: new FormControl(''),
     idDpto: new FormControl(''),
@@ -125,13 +127,14 @@ export class FormEstudioNoFormalComponent implements OnInit {
             'modalidad': new FormControl(dato.idDatoModalidadAcademica),
             'tipoEstudio': new FormControl(dato.idDatoNombreEstudio),
             'nombre': new FormControl(dato.nombreEstudioEspecifico),
+            'tipoCentroEstudio': new FormControl(dato.idDatoCentroEstudio),
             'nombreCentro': new FormControl(dato.nombreCentroEstudio),
             'idDatoPais': new FormControl(dato.idDatoPais),
             'idDpto': new FormControl(dato.idDpto),
             'idProv': new FormControl(dato.idProv),
             'idDist': new FormControl(dato.idDist),
             'tiempoEstudiado': new FormControl(dato.tiempoEstudiado),
-            'tipoTiempo': new FormControl(dato.idDatoTiempoUnidad),
+            'tipoTiempo': new FormControl(dato.idDatoUnidadTiempo),
             'promedioPonderado': new FormControl(dato.promedioPonderado),
             'fechaInicio': new FormControl(dato.fechaInicio),
             'fechaFin': new FormControl(dato.fechaFin),
@@ -161,13 +164,14 @@ export class FormEstudioNoFormalComponent implements OnInit {
     exp.idDatoModalidadAcademica = this.form.get('modalidad').value;
     exp.idDatoNombreEstudio = this.form.get('tipoEstudio').value;
     exp.nombreEstudioEspecifico = this.form.get('nombre').value;
+    exp.idDatoCentroEstudio = this.form.get('tipoCentroEstudio').value;
     exp.nombreCentroEstudio = this.form.get('nombreCentro').value;
     exp.idDatoPais = this.form.get('idDatoPais').value;
     exp.idDpto = this.form.get('idDpto').value;
     exp.idProv = this.form.get('idProv').value;
     exp.idDist = this.form.get('idDist').value;
     exp.tiempoEstudiado = this.form.get('tiempoEstudiado').value;
-    exp.idDatoTiempoUnidad = this.form.get('tipoTiempo').value;
+    exp.idDatoUnidadTiempo = this.form.get('tipoTiempo').value;
     exp.promedioPonderado = this.form.get('promedioPonderado').value;
     exp.fechaInicio = this.form.get('fechaInicio').value;
     exp.fechaFin = this.form.get('fechaFin').value;

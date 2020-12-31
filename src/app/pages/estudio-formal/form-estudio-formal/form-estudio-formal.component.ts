@@ -83,7 +83,7 @@ export class FormEstudioFormalComponent implements OnInit {
             'tipoCentro': new FormControl(dato.idDatoCentroEstudio),
             'tipoSituacion': new FormControl(dato.idDatoSituacionEstudio),
             'tiempoEstudiado': new FormControl(dato.tiempoEstudiado),
-            'tipoTiempo': new FormControl(dato.idDatoTiempoUnidad),
+            'tipoTiempo': new FormControl(dato.idDatoUnidadTiempo),
             'promedioPonderado': new FormControl(dato.promedioPonderado),
             'fechaInicio': new FormControl(dato.fechaInicio),
             'fechaFin': new FormControl(dato.fechaFin),
@@ -120,7 +120,7 @@ export class FormEstudioFormalComponent implements OnInit {
     exp.idDatoCentroEstudio = this.form.get('tipoCentro').value;
     exp.idDatoSituacionEstudio = this.form.get('tipoSituacion').value;
     exp.tiempoEstudiado = this.form.get('tiempoEstudiado').value;
-    exp.idDatoTiempoUnidad = this.form.get('tipoTiempo').value;
+    exp.idDatoUnidadTiempo = this.form.get('tipoTiempo').value;
     exp.promedioPonderado = this.form.get('promedioPonderado').value;
     exp.fechaInicio = this.form.get('fechaInicio').value;
     exp.fechaFin = this.form.get('fechaFin').value;

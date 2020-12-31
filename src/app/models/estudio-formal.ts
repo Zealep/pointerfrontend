@@ -8,7 +8,7 @@ export class EstudioFormal {
   idDatoCentroEstudio: string;
   idDatoSituacionEstudio: string;
   tiempoEstudiado: number;
-  idDatoTiempoUnidad: string;
+  idDatoUnidadTiempo: string;
   promedioPonderado: number;
   fechaInicio: Date;
   fechaFin: Date;
