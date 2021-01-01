@@ -3,7 +3,7 @@ import { EstudioFormal } from '../models/estudio-formal';
 import { catchError } from 'rxjs/operators';
 import { HOST } from '../shared/var.constant';
 import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpRequest, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { ResponseApi } from '../models/response-api';
@@ -18,17 +18,25 @@ export class UploadFileService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  upload(formData: FormData): Observable<HttpEvent<any>> {
-    const req = new HttpRequest('POST', `${this.baseUrl}/save`, formData, {
-      reportProgress: true,
-      responseType: 'json'
-    });
-
-    return this.http.request(req);
+  upload(formData: FormData){
+    var request = new XMLHttpRequest();
+    request.open('POST', `${this.baseUrl}/save`, false);  // `false`
+    request.send(formData);
+    //return this.http.post<ResponseApi>(`${this.baseUrl}/save`,formData).toPromise();
   }
 
-  getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/files`);
+  getFiles(id:string){
+    return this.http.get<DatoArchivo[]>(`${this.baseUrl}/getByCodigoRelacional/${id}`);
+  }
+
+  download(path: string): Observable<Blob> {
+    let parms = new HttpParams();
+    parms = parms.append('url',path);
+    return this.http.get(`${this.baseUrl}/getFile`,
+      {
+        params:parms,
+        responseType: 'blob'
+    });
   }
 
 

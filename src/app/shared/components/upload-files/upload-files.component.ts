@@ -17,18 +17,18 @@ export class UploadFilesComponent implements OnInit {
   @Input() id: string;
   @Input() idProceso: string;
   tiposDocumento: ProcesoDocumento[];
-  filesUpload: Array<File> = [];
   cargarArchivos: UploadDocument[] = [];
   message = '';
   idTipoDocumento:string = '';
 
-  fileInfos: Observable<any>;
+  fileInfos: DatoArchivo[];
 
   constructor(private uploadService: UploadFileService,
     private procesoDocumentoService: ProcesoDocumentoService) { }
 
   ngOnInit(): void {
     this.getProcesosDocumentos();
+    this.getFiles();
   }
 
   getProcesosDocumentos(){
@@ -40,6 +40,31 @@ export class UploadFilesComponent implements OnInit {
     })
   }
 
+  descargar(url:string,name:string){
+    this.uploadService.download(url)
+    .subscribe(x=>{
+      const url = window.URL.createObjectURL(x);
+      const a = document.createElement('a');
+      a.setAttribute('style', 'display:none;');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = name;
+      a.click();
+      return url;
+    })
+  }
+
+  getFiles(){
+    console.log('obtener files', this.id)
+    if(this.id!=null){
+      this.uploadService.getFiles(this.id).subscribe
+      (x=>{
+        this.fileInfos=x;
+      })
+    }
+
+  }
+
   selectFiles(event) {
     const files = event.target.files;
     for(let i=0;i<files.length;i++){
@@ -48,28 +73,31 @@ export class UploadFilesComponent implements OnInit {
       up.tipoDocumento = this.idTipoDocumento;
       this.cargarArchivos.push(up);
     }
-    
+
+  }
+  eliminar(index){
+      this.cargarArchivos.splice(index,1);
   }
 
   uploadFiles(archivo:DatoArchivo) {
     console.log('archivo ',archivo.idCodigoRelacional)
+
     this.message = '';
-    for (let i = 0; i < this.filesUpload.length; i++) {
-      this.upload(i, this.filesUpload[i],archivo);
+    for (let i = 0; i < this.cargarArchivos.length; i++) {
+      let file = this.cargarArchivos[i];
+      archivo.idDocumento = file.tipoDocumento
+      this.upload(file.archivo ,archivo);
     }
+
   }
 
-  upload(idx, file,archivo) {
+  upload(file,archivo) {
     const formData: FormData = new FormData();
     formData.append('file',file)
     formData.append('archivo',JSON.stringify(archivo));
 
-    this.uploadService.upload(formData).subscribe(
-      event => {
-      },
-      err => {
-        this.message = 'No se pudo subir el archivo:' + file.name;
-      });
+    this.uploadService.upload(formData);
+
   }
 
 }

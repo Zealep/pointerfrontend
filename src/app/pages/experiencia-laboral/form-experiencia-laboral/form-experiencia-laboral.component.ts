@@ -11,6 +11,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EMPTY } from 'rxjs';
 import { UploadFilesComponent } from 'src/app/shared/components/upload-files/upload-files.component';
+import { DatosPersonal } from 'src/app/models/datos-personal';
 
 @Component({
   selector: 'app-form-experiencia-laboral',
@@ -29,7 +30,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
   provincia: Combo[] = [];
   distrito: Combo[] = [];
   idUserWeb: string;
-  idPostulante: string;
+  postulante: DatosPersonal;
   idExperiencia: string;
   archivo = new DatoArchivo();
   idProceso = '00024';
@@ -82,7 +83,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
     this.idExperiencia = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idExperiencia);
     this.getPais();
-    this.getIdPostulante();
+    this.getDatosPostulante();
 
   }
 
@@ -176,10 +177,10 @@ export class FormExperienciaLaboralComponent implements OnInit {
 
   }
 
-  getIdPostulante(){
+  getDatosPostulante(){
     this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
     .subscribe(data=>{
-      this.idPostulante = data.idPostulante;
+      this.postulante = data;
     })
   }
 
@@ -193,7 +194,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
       exp.idExperienciaLaboral = this.idExperiencia;
     }
 
-    exp.idPostulante = this.idPostulante;
+    exp.idPostulante = this.postulante.idPostulante;
     exp.rucEmpresa = this.form.get('rucEmpresa').value;
     exp.rasonSocialEmpresa = this.form.get('nombreEmpresa').value;
     exp.idDatoTipoEmpresa = this.form.get('tipoEmpresa').value;
@@ -236,9 +237,10 @@ export class FormExperienciaLaboralComponent implements OnInit {
       .subscribe(result => {
         console.log('result',result)
 
-        //this.archivo.idPostulante = this.idUserWeb;
         this.archivo.idCodigoRelacional = result.idEntity
         this.archivo.idProceso = '00025'
+        this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
+        this.archivo.numeroDocumento= this.postulante.numeroDocumento
         this.upload.uploadFiles(this.archivo);
 
         this.clear();

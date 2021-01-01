@@ -15,24 +15,18 @@
   Cargar imagenes
 </button>
 
-<mat-list role="list" *ngFor="let s of cargarArchivos">
-  <mat-list-item role="listitem">{{s.tipoDocumento}} - {{s.archivo.name}}</mat-list-item>
+<mat-list role="list" *ngFor="let s of cargarArchivos;let i = index">
+  <mat-list-item role="listitem">{{s.tipoDocumento}} - {{s.archivo.name}} <button mat-icon-button color="warn" (click)="eliminar(i)">
+    <mat-icon>delete</mat-icon></button>
+  </mat-list-item>
 </mat-list>
 
-<div>{{ message }}</div>
 
-<mat-card *ngIf="this.id">
-  <mat-card-header>
-    Imagenes subidas
-  </mat-card-header>
-  <mat-card-content>
-    <ul  *ngFor="let file of fileInfos | async">
-      <li>
-        <p><a href="{{ file.url }}">{{ file.name }}</a></p>
-        <img src="{{ file.url }}" alt="{{ file.name }}" height="80px">
-      </li>
-    </ul>
-  </mat-card-content>
-</mat-card>
-
-
+<div *ngIf="this.id">
+<h3>Imagenes subidas</h3>
+<mat-list role="list" *ngFor="let s of fileInfos;let i = index">
+  <mat-list-item role="listitem">{{s.idDocumento}} - {{s.nombreArchivo}} <button mat-icon-button color="accent" (click)="descargar(s.pathArchivo,s.nombreArchivo)">
+    <mat-icon>download</mat-icon></button>
+  </mat-list-item>
+</mat-list>
+</div>
