@@ -248,7 +248,7 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select formControlName="areasInteres" multiple>
+            <mat-select (selectionChange)="select($event.value)">
               <mat-option *ngFor="let a of areas" [value]="a.cod">{{a.des}}</mat-option>
             </mat-select>
           </mat-form-field>

@@ -53,7 +53,6 @@ export class DatosPersonalesComponent implements OnInit {
 
   idPostulante: string;
 
-
   form: FormGroup = new FormGroup({
     tipoDocumento: new FormControl(''),
     numeroDocumento: new FormControl(''),
@@ -89,8 +88,7 @@ export class DatosPersonalesComponent implements OnInit {
     expectativaSalarial: new FormControl(''),
     idMedioInformativo: new FormControl(''),
     indTieneDiscapacidad: new FormControl(''),
-    numeroConadis: new FormControl(''),
-    areasInteres: new FormControl('')
+    numeroConadis: new FormControl('')
   });
 
 
@@ -142,6 +140,11 @@ export class DatosPersonalesComponent implements OnInit {
 
   onSelectProvinciaResidencia(dato: string) {
     this.getDistritoResidencia(dato);
+  }
+
+  refreshDataSource(){
+    this.dataAreas = new MatTableDataSource(this.areasPostulante);
+
   }
 
   getTiposDocumentos() {
@@ -271,11 +274,6 @@ export class DatosPersonalesComponent implements OnInit {
       .subscribe(dato => {
         console.log(dato);
 
-        let areas: string[] = [];
-        this.areasPostulante.forEach(function(value){
-          areas.push(value.idAreaAspira);
-        });
-
         this.onSelectPaisNacimiento(dato.idDatoPaisNacimiento);
         this.onSelectDepartamentoNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento);
         this.onSelectProvinciaNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento+dato.idProvNacimiento);
@@ -320,9 +318,7 @@ export class DatosPersonalesComponent implements OnInit {
           'expectativaSalarial': new FormControl(dato.expectativaSalarial),
           'idMedioInformativo': new FormControl(dato.idMedioInformativo),
           'indTieneDiscapacidad': new FormControl(dato.indTieneDiscapacidad),
-          'numeroConadis': new FormControl(dato.numeroConadis),
-          'areasInteres': new FormControl(areas)
-        });
+          'numeroConadis': new FormControl(dato.numeroConadis)        });
       })
   }
   getIdPostulante(){
@@ -375,7 +371,7 @@ export class DatosPersonalesComponent implements OnInit {
     datos.idMedioInformativo = this.form.get('idMedioInformativo').value;
     datos.indTieneDiscapacidad = this.form.get('indTieneDiscapacidad').value;
     datos.numeroConadis = this.form.get('numeroConadis').value;
-
+    
     this.datosPersonalService.save(datos)
       .pipe(
         catchError(response => {
@@ -391,8 +387,22 @@ export class DatosPersonalesComponent implements OnInit {
           duration: 3000
         });
 
-      });
 
+      });
+      
+
+  }
+
+  select(a){
+    let area = new AreaInteres();
+    area.idPostulante = this.idPostulante;
+    area.idAreaAspira = a;
+    this.areaInteresService.save(area)
+    .subscribe(x =>{
+      this.getAreasByPostulante();
+      this.refreshDataSource();
+    })
+    
   }
 
   loadAreas(){

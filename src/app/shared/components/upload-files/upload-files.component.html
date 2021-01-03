@@ -1,3 +1,4 @@
+<div class="container">
 <mat-form-field>
   <mat-label>Tipo de documento</mat-label>
   <mat-select [(ngModel)]="idTipoDocumento">
@@ -8,7 +9,7 @@
 </mat-form-field>
 
 
-<button mat-raised-button color="primary" (click)="fileInput.click()">
+<button class="btn-upload" mat-raised-button color="primary" (click)="fileInput.click()">
   <input #fileInput type="file" accept="application/pdf" multiple (change)="selectFiles($event)"
     style="display:none;" />
   <mat-icon>file_upload</mat-icon>
@@ -23,10 +24,13 @@
 
 
 <div *ngIf="this.id">
-<h3>Imagenes subidas</h3>
+<h3 class="title">
+ <strong>Imagenes subidas</strong> </h3>
 <mat-list role="list" *ngFor="let s of fileInfos;let i = index">
   <mat-list-item role="listitem">{{s.idDocumento}} - {{s.nombreArchivo}} <button mat-icon-button color="accent" (click)="descargar(s.pathArchivo,s.nombreArchivo)">
     <mat-icon>download</mat-icon></button>
   </mat-list-item>
 </mat-list>
+</div>
+
 </div>

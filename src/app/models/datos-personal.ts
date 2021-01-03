@@ -41,6 +41,5 @@ export class DatosPersonal{
   idMedioInformativo: string;
   indTieneDiscapacidad: string;
   numeroConadis: number;
-  areaInteres: AreaInteres[];
 
 }
