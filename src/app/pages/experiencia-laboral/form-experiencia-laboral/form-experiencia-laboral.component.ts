@@ -12,6 +12,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EMPTY } from 'rxjs';
 import { UploadFilesComponent } from 'src/app/shared/components/upload-files/upload-files.component';
 import { DatosPersonal } from 'src/app/models/datos-personal';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-form-experiencia-laboral',
@@ -58,8 +59,10 @@ export class FormExperienciaLaboralComponent implements OnInit {
     cargo: new FormControl(''),
     area: new FormControl(''),
     dedicacion: new FormControl(''),
-    motivoRetiro: new FormControl(''),
+    contrato: new FormControl(''),
+    retiro: new FormControl(''),
     manejoPersonal: new FormControl(''),
+    cantidadPersonal: new FormControl(''),
     salario: new FormControl(''),
     nombreJefe: new FormControl(''),
     cargoJefe: new FormControl(''),
@@ -84,7 +87,28 @@ export class FormExperienciaLaboralComponent implements OnInit {
     this.cargar(this.idExperiencia);
     this.getPais();
     this.getDatosPostulante();
+    this.getTipoEmpresas();
+    this.getTipoActividades();
+    this.getTipoDedicacion();
 
+  }
+
+  getTipoDedicacion(){
+    this.menuService.getTiposDedicacion().subscribe(data => {
+      this.tiposDedicacion = data
+    });
+  }
+
+  getTipoActividades(){
+    this.menuService.getTiposActividad().subscribe(data => {
+      this.tiposActividad = data
+    });
+  }
+
+  getTipoEmpresas(){
+    this.menuService.getTiposEmpresa().subscribe(data => {
+      this.tiposEmpresa = data
+    });
   }
 
   onSelectPais(dato: string) {
@@ -163,8 +187,11 @@ export class FormExperienciaLaboralComponent implements OnInit {
           'diasTrabajados': new FormControl(dato.diasTrabajados),
           'cargo': new FormControl(dato.cargoDesempeñado),
           'area': new FormControl(dato.area),
-          'dedicacion': new FormControl(dato.indDatoTipoDedicacion),
+          'dedicacion': new FormControl(dato.idDatoTipoDedicacion),
+          'contrato': new FormControl(dato.idDatoTipoContrato),
+          'retiro': new FormControl(dato.idDatoTipoContrato),
           'manejoPersonal': new FormControl(dato.indPersonalCargo),
+          'cantidadPersonal': new FormControl(dato.cantidadPersonalCargo),
           'salario': new FormControl(dato.sueldo),
           'nombreJefe': new FormControl(dato.nombreJefe),
           'cargoJefe': new FormControl(dato.cargoJefe),
@@ -214,8 +241,11 @@ export class FormExperienciaLaboralComponent implements OnInit {
     exp.cargoDesempeñado = this.form.get('cargo').value;
     exp.area = this.form.get('area').value;
 
-    exp.indDatoTipoDedicacion = this.form.get('dedicacion').value;
+    exp.idDatoTipoDedicacion = this.form.get('dedicacion').value;
+    exp.idDatoTipoContrato = this.form.get('contrato').value;
+    exp.idDatoMotivoRetiro = this.form.get('retiro').value;
     exp.indPersonalCargo = this.form.get('manejoPersonal').value;
+    exp.cantidadPersonalCargo = this.form.get('cantidadPersonal').value;
     exp.sueldo = this.form.get('salario').value;
     exp.nombreJefe = this.form.get('nombreJefe').value;
     exp.cargoJefe = this.form.get('cargoJefe').value;

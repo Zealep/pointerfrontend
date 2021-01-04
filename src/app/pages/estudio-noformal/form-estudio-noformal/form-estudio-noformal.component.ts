@@ -64,9 +64,14 @@ export class FormEstudioNoFormalComponent implements OnInit {
     this.cargar(this.idEstudio);
     this.getPais();
     this.getIdPostulante();
-
+    this.getTiposTiempo();
   }
 
+  getTiposTiempo(){
+    this.menuService.getTiposTiempo().subscribe(data => {
+      this.tiposTiempo = data
+    });
+  }
   onSelectPais(dato: string) {
     this.getDepartamento(dato);
   }

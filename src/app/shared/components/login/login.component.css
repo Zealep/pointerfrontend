@@ -10,11 +10,12 @@
 }
 
 mat-card-title,
-mat-card-content {
+mat-card-content,mat-card-footer,mat-card-actions {
   display: flex;
   justify-content: center;
 }
 
 .mat-raised-button,.mat-button {
-  width: 100%;
+  width: 300px;
+  margin: 0.5rem;
 }

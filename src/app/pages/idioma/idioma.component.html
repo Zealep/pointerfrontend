@@ -1,0 +1,70 @@
+<mat-card>
+  <mat-card-title>
+
+    <button routerLink="/pages/idiomas/form" mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      Nuevo
+    </button>
+  </mat-card-title>
+  <mat-card-content>
+
+    <mat-form-field>
+      <mat-label>Filtrar</mat-label>
+      <input matInput (keyup)="applyFilter($event)">
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="idioma">
+          <th mat-header-cell *matHeaderCellDef> Idioma </th>
+          <td mat-cell *matCellDef="let element"> {{element.idDatoIdioma}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="oral">
+          <th mat-header-cell *matHeaderCellDef> Nivel oral </th>
+          <td mat-cell *matCellDef="let element"> {{element.idDatoNivelHablaIdioma}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lectura">
+          <th mat-header-cell *matHeaderCellDef> Nivel lectura </th>
+          <td mat-cell *matCellDef="let element"> {{element.idDatoNivelLeeIdioma}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="escritura">
+          <th mat-header-cell *matHeaderCellDef> Nivel escritura </th>
+          <td mat-cell *matCellDef="let element"> {{element.idDatoNivelEscribeIdioma}} </td>
+        </ng-container>
+
+
+
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menuCrud">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menuCrud="matMenu">
+              <button mat-menu-item (click)='callEdit(element.idDatoIdioma)'>
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+              </button>
+              <button mat-menu-item (click)="delete(element)">
+                <mat-icon>delete</mat-icon>
+                <span>Eliminar</span>
+              </button>
+
+            </mat-menu>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+  </mat-card-content>
+</mat-card>

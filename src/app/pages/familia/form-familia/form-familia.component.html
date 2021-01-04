@@ -1,0 +1,132 @@
+<mat-card class="container">
+  <mat-card-header>
+    Datos del familiar
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <div class="form-container" fxLayout="column wrap">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de documento</mat-label>
+          <mat-select formControlName="tipoDocumento">
+            <mat-option *ngFor="let t of tiposDocumento" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Numero documento</mat-label>
+          <input matInput formControlName="numeroDocumento">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido paterno</mat-label>
+          <input matInput formControlName="apellidoPaterno">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido materno</mat-label>
+          <input matInput formControlName="apellidoMaterno">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombres</mat-label>
+          <input matInput formControlName="nombres">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Genero</mat-label>
+          <mat-select formControlName="tipoGenero">
+            <mat-option *ngFor="let t of tiposGenero" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo parentesco</mat-label>
+          <mat-select formControlName="tipoParentesco">
+            <mat-option *ngFor="let t of tiposParentesco" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Grado de instruccion</mat-label>
+          <mat-select formControlName="tipoInstruccion">
+            <mat-option *ngFor="let t of tiposInstruccion" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ocupacion</mat-label>
+          <input matInput formControlName="ocupacion">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Pais Nacimiento</mat-label>
+          <mat-select formControlName="idDatoPais" (ngModelChange)="onSelectPais($event)">
+            <mat-option *ngFor="let s of pais" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Departamento Nacimiento</mat-label>
+          <mat-select formControlName="idDpto" (ngModelChange)="onSelectDepartamento($event)">
+            <mat-option *ngFor="let s of departamento" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Provincia Nacimiento</mat-label>
+          <mat-select formControlName="idProv" (ngModelChange)="onSelectProvincia($event)">
+            <mat-option *ngFor="let s of provincia" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Distrito Nacimiento</mat-label>
+          <mat-select formControlName="idDist">
+            <mat-option *ngFor="let s of distrito" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="row wrap" fxLayoutGap="40px">
+      <button fxFlex="calc(50%-40px)" mat-raised-button color="primary" (click)="grabar()">
+        Registrar
+      </button>
+
+      <button fxFlex="calc(50%-40px)" mat-raised-button color="accent" (click)="cancelar()">
+        Cancelar
+      </button>
+      </div>
+
+  </mat-card-actions>
+</mat-card>
+
+
+

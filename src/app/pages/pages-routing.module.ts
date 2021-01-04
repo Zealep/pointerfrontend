@@ -1,3 +1,7 @@
+import { FormFamiliaComponent } from './familia/form-familia/form-familia.component';
+import { FamiliaComponent } from './familia/familia.component';
+import { FormIdiomaComponent } from './idioma/form-idioma/form-idioma.component';
+import { IdiomaComponent } from './idioma/idioma.component';
 import { FormEstudioNoFormalComponent } from './estudio-noformal/form-estudio-noformal/form-estudio-noformal.component';
 import { FormEstudioFormalComponent } from './estudio-formal/form-estudio-formal/form-estudio-formal.component';
 import { EstudioNoformalComponent } from './estudio-noformal/estudio-noformal.component';
@@ -48,6 +52,22 @@ const routes: Routes = [
       {
         path: 'edu-noformal/form',
         component: FormEstudioNoFormalComponent
+      },
+      {
+        path: 'idiomas',
+        component: IdiomaComponent
+      },
+      {
+        path: 'idiomas/form',
+        component: FormIdiomaComponent
+      },
+      {
+        path: 'familiares',
+        component: FamiliaComponent
+      },
+      {
+        path: 'familiares/form',
+        component: FormFamiliaComponent
       }
 
 

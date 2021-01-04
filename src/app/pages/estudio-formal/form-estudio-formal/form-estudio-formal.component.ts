@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { EstudioFormalService } from 'src/app/services/estudio-formal.service';
 import { EMPTY } from 'rxjs';
 import { EstudioFormal } from 'src/app/models/estudio-formal';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-form-estudio-formal',
@@ -60,7 +61,21 @@ export class FormEstudioFormalComponent implements OnInit {
     this.idEstudio = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idEstudio);
     this.getIdPostulante();
+    this.getTiposSituacion();
+    this.getTiposTiempo();
 
+  }
+
+  getTiposSituacion(){
+    this.menuService.getTiposSituacion().subscribe(data => {
+      this.tiposSituacion = data
+    });
+  }
+
+  getTiposTiempo(){
+    this.menuService.getTiposTiempo().subscribe(data => {
+      this.tiposTiempo = data
+    });
   }
 
   cargar(id: string) {

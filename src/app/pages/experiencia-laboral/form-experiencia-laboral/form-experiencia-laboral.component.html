@@ -4,18 +4,18 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form">
-      <div class="container" fxLayout="row wrap" fxLayoutGap="40px" fxLayoutAlign="center">
-        <mat-form-field fxFlex="calc(50%-40px)">
+      <div class="form-container" fxLayout="row wrap" fxLayoutGap="40px" fxLayoutAlign="center">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>RUC de la empresa</mat-label>
           <input matInput formControlName="rucEmpresa" appearance="fill" required>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Nombre de la empresa</mat-label>
           <input matInput formControlName="nombreEmpresa">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Tipo de empresa</mat-label>
           <mat-select formControlName="tipoEmpresa">
             <mat-option *ngFor="let t of tiposEmpresa" [value]="t.cod">
@@ -24,7 +24,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Actividad de la empresa</mat-label>
           <mat-select formControlName="actividadEmpresa">
             <mat-option *ngFor="let t of tiposActividad" [value]="t.cod">
@@ -33,7 +33,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Pais</mat-label>
           <mat-select formControlName="idDatoPais" (ngModelChange)="onSelectPais($event)">
             <mat-option *ngFor="let s of pais" [value]="s.cod">
@@ -42,7 +42,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Departamento</mat-label>
           <mat-select formControlName="idDpto" (ngModelChange)="onSelectDepartamento($event)">
             <mat-option *ngFor="let s of departamento" [value]="s.cod">
@@ -51,7 +51,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Provincia</mat-label>
           <mat-select formControlName="idProv" (ngModelChange)="onSelectProvincia($event)">
             <mat-option *ngFor="let s of provincia" [value]="s.cod">
@@ -60,7 +60,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Distrito</mat-label>
           <mat-select formControlName="idDist">
             <mat-option *ngFor="let s of distrito" [value]="s.cod">
@@ -69,66 +69,84 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Direccion</mat-label>
           <input matInput formControlName="direccion">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Telefono</mat-label>
           <input matInput formControlName="telefono">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="calc(50%-40px)">
+        <mat-form-field appearance="outline" fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Fecha de ingreso</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="fechaIngreso">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="calc(50%-40px)">
+        <mat-form-field appearance="outline" fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Fecha de retiro</mat-label>
           <input matInput [matDatepicker]="picker2" formControlName="fechaRetiro">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
 
-        <div fxFlex="calc(50%-40px)" fxLayout="column">
+        <div fxFlex="calc(50%-40px)" fxLayout="column" appearance="outline">
           <mat-label>Trabaja actualmente?</mat-label>
           <mat-radio-group formControlName="trabajaActualmente" fxLayoutGap="20px">
             <mat-radio-button value="S">Si</mat-radio-button>
             <mat-radio-button value="N">No</mat-radio-button>
           </mat-radio-group>
         </div>
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Años trabajo</mat-label>
           <input type="number" matInput formControlName="añosTrabajados">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Meses trabajo</mat-label>
           <input type="number" matInput formControlName="mesesTrabajados">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Dias trabajo</mat-label>
           <input type="number" matInput formControlName="diasTrabajados">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Cargo desempeñado</mat-label>
           <input matInput formControlName="cargo">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Area</mat-label>
           <input matInput formControlName="area">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Dedicacion</mat-label>
           <mat-select formControlName="dedicacion">
             <mat-option *ngFor="let t of tiposDedicacion" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
+          <mat-label>Tipo de contrato</mat-label>
+          <mat-select formControlName="contrato">
+            <mat-option *ngFor="let t of tiposContrato" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
+          <mat-label>Motivo Retiro</mat-label>
+          <mat-select formControlName="retiro">
+            <mat-option *ngFor="let t of tiposRetiro" [value]="t.cod">
               {{t.des}}
             </mat-option>
           </mat-select>
@@ -143,33 +161,38 @@
 
         </div>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
+          <mat-label>Cantidad personal a cargo</mat-label>
+          <input matInput formControlName="cantidadPersonal">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Salario en soles</mat-label>
           <input matInput type="number" formControlName="salario">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Nombre del jefe inmediato</mat-label>
           <input matInput formControlName="nombreJefe">
         </mat-form-field>
 
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Cargo del jefe inmediato</mat-label>
           <input matInput formControlName="cargoJefe">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Numero contacto del jefe inmediato</mat-label>
           <input matInput formControlName="numeroContacto">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-80px)">
+        <mat-form-field fxFlex="calc(50%-80px)" appearance="outline">
           <mat-label>Funciones desempes</mat-label>
           <input matInput formControlName="funciones">
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Numero de folio</mat-label>
           <input matInput formControlName="numeroFolio">
         </mat-form-field>
@@ -182,7 +205,7 @@
     </form>
   </mat-card-content>
   <mat-card-actions >
-    <div fxLayout="row wrap" fxLayoutGap="40px" class="container">
+    <div fxLayout="row wrap" fxLayoutGap="40px">
       <button fxFlex="calc(50%-40px)" mat-raised-button color="primary" (click)="grabar()">
         Registrar
       </button>

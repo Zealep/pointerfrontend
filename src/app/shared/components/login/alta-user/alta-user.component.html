@@ -1,26 +1,26 @@
 <mat-card class="container">
   <mat-card-header>
-    Registro de postulante
+    <strong>Registro de postulante</strong>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form">
       <div class="form-container">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Apellido Paterno</mat-label>
           <input matInput formControlName="apellidoPaterno" required>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Apellido Materno</mat-label>
           <input matInput formControlName="apellidoMaterno" required>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Nombres</mat-label>
           <input matInput formControlName="nombres" required>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Tipo de documento</mat-label>
           <mat-select formControlName="tipoDocumento" required>
             <mat-option *ngFor="let t of tiposDocumento" [value]="t.idTipoDocumentoIdentidad">
@@ -29,17 +29,17 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Numero de documento</mat-label>
           <input matInput formControlName="numeroDocumento" required>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Correo</mat-label>
           <input matInput type="email" formControlName="correo" required>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Contraseña</mat-label>
           <input matInput type="password" formControlName="contraseña" required>
         </mat-form-field>
@@ -48,11 +48,11 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button color="primary" [disabled]="form.invalid" (click)="grabar()">
+    <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="grabar()">
       Registrar
     </button>
 
-    <button mat-stroked-button color="accent" (click)="cancelar()">
+    <button mat-raised-button color="accent" (click)="cancelar()">
       Cancelar
     </button>
 

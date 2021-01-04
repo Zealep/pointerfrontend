@@ -4,9 +4,9 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form">
-      <div class="form-container">
+      <div class="form-container" fxLayout="column wrap">
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Modalidad academica</mat-label>
           <mat-select formControlName="modalidad">
             <mat-option *ngFor="let t of tiposModalidad" [value]="t.cod">
@@ -15,7 +15,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Tipo de estudio</mat-label>
           <mat-select formControlName="tipoEstudio">
             <mat-option *ngFor="let t of tiposEstudio" [value]="t.cod">
@@ -24,12 +24,12 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Nombre del estudio</mat-label>
           <input matInput formControlName="nombre">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Tipo centro de estudio</mat-label>
           <mat-select formControlName="tipoCentro">
             <mat-option *ngFor="let t of tiposCentro" [value]="t.cod">
@@ -38,7 +38,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Situacion de estudio</mat-label>
           <mat-select formControlName="tipoSituacion">
             <mat-option *ngFor="let t of tiposSituacion" [value]="t.cod">
@@ -48,12 +48,12 @@
         </mat-form-field>
 
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Tiempo estudiado</mat-label>
           <input matInput formControlName="tiempoEstudiado">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Unidad tiempo</mat-label>
           <mat-select formControlName="tipoTiempo">
             <mat-option *ngFor="let t of tiposTiempo" [value]="t.cod">
@@ -62,7 +62,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Promedio Ponderado</mat-label>
           <input matInput formControlName="promedioPonderado">
         </mat-form-field>
@@ -101,7 +101,7 @@
             <mat-radio-button value="N">No</mat-radio-button>
           </mat-radio-group>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Numero colegiatura</mat-label>
             <input matInput formControlName="numeroColegiatura">
           </mat-form-field>
@@ -117,13 +117,15 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button color="primary" (click)="grabar()">
-      Registrar
-    </button>
+    <div fxLayout="row wrap" fxLayoutGap="40px">
+      <button fxFlex="calc(50%-40px)" mat-raised-button color="primary" (click)="grabar()">
+        Registrar
+      </button>
 
-    <button mat-stroked-button color="accent" (click)="cancelar()">
-      Cancelar
-    </button>
+      <button fxFlex="calc(50%-40px)" mat-raised-button color="accent" (click)="cancelar()">
+        Cancelar
+      </button>
+      </div>
 
   </mat-card-actions>
 </mat-card>

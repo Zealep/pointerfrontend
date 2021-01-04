@@ -1,13 +1,1 @@
-.mat-radio-button ~ .mat-radio-button {
-  margin-left: 16px;
-}
 
-.container{
-  margin: 2rem auto;
-  width: 50%;
-}
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-}

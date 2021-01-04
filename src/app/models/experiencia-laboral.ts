@@ -18,7 +18,9 @@ export class ExperienciaLaboral{
   telefono: string;
   fechaIngreso: Date;
   fechaRetiro: Date;
-  indDatoTipoDedicacion: string;
+  idDatoTipoDedicacion: string;
+  idDatoTipoContrato: string;
+  idDatoMotivoRetiro: string;
   cargoDesempeñado: string;
   area: string;
   funciones: string;

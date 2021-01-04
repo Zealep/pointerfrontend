@@ -13,11 +13,15 @@ import { EstudioFormalComponent } from './estudio-formal/estudio-formal.componen
 import { EstudioNoformalComponent } from './estudio-noformal/estudio-noformal.component';
 import { FormEstudioNoFormalComponent } from './estudio-noformal/form-estudio-noformal/form-estudio-noformal.component';
 import { FormEstudioFormalComponent } from './estudio-formal/form-estudio-formal/form-estudio-formal.component';
+import { IdiomaComponent } from './idioma/idioma.component';
+import { FamiliaComponent } from './familia/familia.component';
+import { FormFamiliaComponent } from './familia/form-familia/form-familia.component';
+import { FormIdiomaComponent } from './idioma/form-idioma/form-idioma.component';
 
 
 
 @NgModule({
-  declarations: [DatosPersonalesComponent, ExperienciaLaboralComponent, FormExperienciaLaboralComponent, EstudioFormalComponent, EstudioNoformalComponent, FormEstudioNoFormalComponent, FormEstudioFormalComponent],
+  declarations: [DatosPersonalesComponent, ExperienciaLaboralComponent, FormExperienciaLaboralComponent, EstudioFormalComponent, EstudioNoformalComponent, FormEstudioNoFormalComponent, FormEstudioFormalComponent, IdiomaComponent, FamiliaComponent, FormFamiliaComponent, FormIdiomaComponent],
   imports: [
     CommonModule,
     FormsModule,

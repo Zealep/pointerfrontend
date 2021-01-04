@@ -1,14 +1,14 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <a [routerLink]="'/pages/datos-personales'">
-      <h1>POINTERWEB</h1>
-    </a>
-    <span class="menu-spacer"></span>
+<mat-toolbar>
 
+  <a [routerLink]="'/pages/datos-personales'">
+    <img src="./assets/images/pointererp.png" width="150" height="80"/>
+  </a>
+</mat-toolbar>
+<mat-toolbar color="primary">
+    <div class="buttons">
     <button mat-button *ngFor="let m of menus" [routerLink]="'/pages'+m.urlOperacion">
       {{m.nombreMenuWeb}}
     </button>
-
-  </mat-toolbar-row>
+    </div>
 
 </mat-toolbar>

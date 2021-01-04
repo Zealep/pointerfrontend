@@ -159,6 +159,80 @@ export class MenuService {
     );
   }
 
+  getTiposEmpresa(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = 'TE'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTiposActividad(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = '55'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTiposDedicacion(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = 'TD'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTiposModalidad(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = 'TD'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTiposSituacion(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = 'SE'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTiposTiempo(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = '19'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
+
   private handleError(error: HttpErrorResponse) {
     if(error.error instanceof ErrorEvent) {
       console.log('Client error', error.error.message);

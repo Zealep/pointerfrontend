@@ -1,0 +1,59 @@
+<mat-card class="container">
+  <mat-card-header>
+    Datos del idioma
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <div class="form-container" fxLayout="column wrap">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Idioma</mat-label>
+          <input matInput formControlName="nombre">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nivel oral</mat-label>
+          <mat-select formControlName="oral">
+            <mat-option *ngFor="let t of tiposNivel" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nivel escritura</mat-label>
+          <mat-select formControlName="escrito">
+            <mat-option *ngFor="let t of tiposNivel" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nivel lectura</mat-label>
+          <mat-select formControlName="lectura">
+            <mat-option *ngFor="let t of tiposNivel" [value]="t.cod">
+              {{t.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="row wrap" fxLayoutGap="40px">
+      <button fxFlex="calc(50%-40px)" mat-raised-button color="primary" (click)="grabar()">
+        Registrar
+      </button>
+
+      <button fxFlex="calc(50%-40px)" mat-raised-button color="accent" (click)="cancelar()">
+        Cancelar
+      </button>
+      </div>
+
+  </mat-card-actions>
+</mat-card>
+
+
