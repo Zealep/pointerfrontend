@@ -62,6 +62,7 @@ export class FamiliaComponent implements OnInit {
      private load(){
        this.familiaService.getFamiliasByPostulante(this.idUserWeb).subscribe(data => {
          let familiares = JSON.parse(JSON.stringify(data));
+         console.log(familiares);
          this.dataSource = new MatTableDataSource(familiares);
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;
@@ -69,7 +70,7 @@ export class FamiliaComponent implements OnInit {
      }
 
      private sendDeleteRequest(exp: Familia) {
-       this.familiaService.delete(exp.idDatoFamilia)
+       this.familiaService.delete(exp.idFamilia)
        .subscribe(response => {
          this.load();
          this.snackBar.open('Familiar eliminado', 'Close', {

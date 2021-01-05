@@ -1,8 +1,9 @@
+import { TipoDocumento } from './tipoDocumento';
 export class Familia{
-  idDatoFamilia:string;
+  idFamilia:string;
   idEmpresa:string;
   idPostulante:string;
-  idTipoDocumentoIdentidad:string;
+  tipoDocumentosIdentidad: TipoDocumento;
   numeroDocumento:string;
   apellidoPaterno:string;
   apellidoMaterno:string;

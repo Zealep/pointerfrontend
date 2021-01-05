@@ -1,3 +1,4 @@
+import { TipoDocumentoService } from './../../../services/tipo-documento.service';
 import { Familia } from './../../../models/familia';
 import { catchError } from 'rxjs/operators';
 import { DatosPersonalService } from './../../../services/datos-personal.service';
@@ -9,6 +10,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Combo } from './../../../models/dto/combo';
 import { Component, OnInit } from '@angular/core';
 import { EMPTY } from 'rxjs';
+import { TipoDocumento } from 'src/app/models/TipoDocumento';
 
 @Component({
   selector: 'app-form-familia',
@@ -17,7 +19,7 @@ import { EMPTY } from 'rxjs';
 })
 export class FormFamiliaComponent implements OnInit {
 
-  tiposDocumento: Combo[] = []
+  tiposDocumento: TipoDocumento[] = []
   tiposGenero: Combo[] = []
   tiposParentesco: Combo[] = []
   tiposInstruccion: Combo[] = []
@@ -54,7 +56,8 @@ export class FormFamiliaComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
-    private datosPersonalService: DatosPersonalService
+    private datosPersonalService: DatosPersonalService,
+    private tipoDocumentoService: TipoDocumentoService
   ) { }
 
   ngOnInit(): void {
@@ -63,7 +66,30 @@ export class FormFamiliaComponent implements OnInit {
     this.cargar(this.idFamilia);
     this.getPais();
     this.getIdPostulante();
+    this.getTiposDocumentos();
+    this.getGeneros();
+    this.getParentescos();
   }
+
+  getTiposDocumentos() {
+    this.tipoDocumentoService.getUsers().subscribe(data => {
+      this.tiposDocumento = data
+    });
+  }
+
+  getGeneros() {
+    this.menuService.getGeneros().subscribe(data => {
+      this.tiposGenero = data
+    });
+  }
+
+  getParentescos() {
+    this.menuService.getTipoParentesco().subscribe(data => {
+      this.tiposParentesco = data
+    });
+  }
+
+
 
   onSelectPais(dato: string) {
     this.getDepartamento(dato);
@@ -122,7 +148,7 @@ export class FormFamiliaComponent implements OnInit {
           this.onSelectProvincia(dato.idDatoPaisNacimiento + dato.idDptoNacimiento + dato.idProvNacimiento);
 
           this.form = new FormGroup({
-            'tipoDocumento': new FormControl(dato.idTipoDocumentoIdentidad),
+            'tipoDocumento': new FormControl(dato.tipoDocumentosIdentidad.idTipoDocumentoIdentidad),
             'numeroDocumento': new FormControl(dato.numeroDocumento),
             'apellidoPaterno': new FormControl(dato.apellidoPaterno),
             'apellidoMaterno': new FormControl(dato.apellidoMaterno),
@@ -155,11 +181,15 @@ export class FormFamiliaComponent implements OnInit {
     let exp = new Familia();
 
     if (this.idFamilia != null) {
-      exp.idDatoFamilia = this.idFamilia;
+      exp.idFamilia = this.idFamilia;
     }
 
     exp.idPostulante = this.idPostulante;
-    exp.idTipoDocumentoIdentidad = this.form.get('tipoDocumento').value;
+
+    let tipoDoc = new TipoDocumento();
+    tipoDoc.idTipoDocumentoIdentidad = this.form.get('tipoDocumento').value;
+    exp.tipoDocumentosIdentidad = tipoDoc;
+
     exp.numeroDocumento = this.form.get('numeroDocumento').value;
     exp.apellidoPaterno = this.form.get('apellidoPaterno').value;
     exp.apellidoMaterno = this.form.get('apellidoMaterno').value;

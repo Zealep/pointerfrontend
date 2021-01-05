@@ -17,7 +17,7 @@
 
         <ng-container matColumnDef="tipoDocumento">
           <th mat-header-cell *matHeaderCellDef> Tipo Documento </th>
-          <td mat-cell *matCellDef="let element"> {{element.idTipoDocumentoIdentidad}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.tipoDocumentosIdentidad.glsTipoDocumentoIdentidad}} </td>
         </ng-container>
 
         <ng-container matColumnDef="numeroDocumento">
@@ -48,7 +48,7 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menuCrud="matMenu">
-              <button mat-menu-item (click)='callEdit(element.idDatoFamilia)'>
+              <button mat-menu-item (click)='callEdit(element.idFamilia)'>
                 <mat-icon>edit</mat-icon>
                 <span>Editar</span>
               </button>

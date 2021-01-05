@@ -69,7 +69,7 @@ export class IdiomaComponent implements OnInit {
      }
 
      private sendDeleteRequest(exp: Idioma) {
-       this.idiomaService.delete(exp.idDatoIdioma)
+       this.idiomaService.delete(exp.idIdioma)
        .subscribe(response => {
          this.load();
          this.snackBar.open('Idioma eliminado', 'Close', {

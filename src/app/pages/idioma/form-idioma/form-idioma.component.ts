@@ -46,7 +46,14 @@ export class FormIdiomaComponent implements OnInit {
     this.idIdioma = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idIdioma);
     this.getIdPostulante();
+    this.getTiposNiveles();
 
+  }
+
+  getTiposNiveles(){
+    this.menuService.getNiveles().subscribe(data => {
+      this.tiposNivel = data
+    });
   }
 
   cargar(id: string) {
@@ -63,6 +70,7 @@ export class FormIdiomaComponent implements OnInit {
         .subscribe(dato => {
 
           this.form = new FormGroup({
+            'nombre': new FormControl(dato.nombreIdioma),
             'oral': new FormControl(dato.idDatoNivelHablaIdioma),
             'escrito': new FormControl(dato.idDatoNivelEscribeIdioma),
             'lectura': new FormControl(dato.idDatoNivelLeeIdioma)
@@ -84,14 +92,16 @@ export class FormIdiomaComponent implements OnInit {
     let exp = new Idioma();
 
     if (this.idIdioma != null) {
-      exp.idDatoIdioma = this.idIdioma;
+      exp.idIdioma = this.idIdioma;
     }
 
     exp.idPostulante = this.idPostulante;
+    exp.nombreIdioma = this.form.get('nombre').value;
     exp.idDatoNivelEscribeIdioma = this.form.get('escrito').value;
     exp.idDatoNivelHablaIdioma = this.form.get('oral').value;
     exp.idDatoNivelLeeIdioma = this.form.get('lectura').value;
 
+    console.log(exp);
 
     this.idiomaService.save(exp)
       .pipe(

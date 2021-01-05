@@ -231,6 +231,30 @@ export class MenuService {
     );
   }
 
+  getNiveles(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = 'NI'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTipoParentesco(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = '97'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
 
   private handleError(error: HttpErrorResponse) {

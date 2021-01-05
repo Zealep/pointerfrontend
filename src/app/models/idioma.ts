@@ -1,5 +1,6 @@
 export class Idioma{
-  idDatoIdioma:string;
+  idIdioma:string;
+  nombreIdioma:string;
   idEmpresa:string;
   idPostulante:string;
   idDatoNivelHablaIdioma:string;
