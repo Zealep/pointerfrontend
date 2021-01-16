@@ -1,3 +1,4 @@
+import { IdiomaDTO } from './../models/dto/idioma-dto';
 import { Idioma } from './../models/idioma';
 import { EstudioFormal } from '../models/estudio-formal';
 import { catchError } from 'rxjs/operators';
@@ -27,6 +28,12 @@ export class IdiomaService {
 
   getIdiomasByPostulante(id: string) {
     return this.http.get<Idioma[]>(`${this.url}/findByPostulante/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+  getIdiomasDTOByPostulante(id: string) {
+    return this.http.get<IdiomaDTO[]>(`${this.url}/getDetailsByPostulante/${id}`)
     .pipe(
       catchError(this.handleError)
     );

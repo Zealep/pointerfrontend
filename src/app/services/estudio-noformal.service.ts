@@ -1,3 +1,4 @@
+import { EstudioNoFormalDTO } from './../models/dto/no-formal-dto';
 import { EstudioNoFormal } from './../models/estudio-noformal';
 import { EstudioFormal } from '../models/estudio-formal';
 import { catchError } from 'rxjs/operators';
@@ -32,6 +33,13 @@ export class EstudioNoFormalService {
     );
   }
 
+  getNoFormalesDTOByPostulante(id: string) {
+    return this.http.get<EstudioNoFormalDTO[]>(`${this.url}/getDetailsByPostulante/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getEstudioNoFormalById(id: string){
     return this.http.get<EstudioNoFormal>(`${this.url}/find/${id}`)
     .pipe(
@@ -40,7 +48,7 @@ export class EstudioNoFormalService {
   }
 
   save(x: EstudioNoFormal){
-    return this.http.post<EstudioNoFormal>(`${this.url}/save`,x)
+    return this.http.post<ResponseApi>(`${this.url}/save`,x)
     .pipe(
       catchError(this.handleError)
     );

@@ -1,3 +1,4 @@
+import { FamiliaDTO } from './../models/dto/familia-dto';
 import { Familia } from './../models/familia';
 import { Idioma } from '../models/idioma';
 import { EstudioFormal } from '../models/estudio-formal';
@@ -28,6 +29,13 @@ export class FamiliaService {
 
   getFamiliasByPostulante(id: string) {
     return this.http.get<Familia[]>(`${this.url}/findByPostulante/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getFamiliasDTOByPostulante(id: string) {
+    return this.http.get<FamiliaDTO[]>(`${this.url}/getDetailsByPostulante/${id}`)
     .pipe(
       catchError(this.handleError)
     );

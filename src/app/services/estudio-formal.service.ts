@@ -1,3 +1,4 @@
+import { EstudioFormalDTO } from './../models/dto/formal-dto';
 import { EstudioFormal } from '../models/estudio-formal';
 import { catchError } from 'rxjs/operators';
 import { HOST } from '../shared/var.constant';
@@ -31,6 +32,13 @@ export class EstudioFormalService {
     );
   }
 
+  getFormalesDTOByPostulante(id: string) {
+    return this.http.get<EstudioFormalDTO[]>(`${this.url}/getDetailsByPostulante/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getEstudioFormalById(id: string){
     return this.http.get<EstudioFormal>(`${this.url}/find/${id}`)
     .pipe(
@@ -39,7 +47,7 @@ export class EstudioFormalService {
   }
 
   save(x: EstudioFormal){
-    return this.http.post<EstudioFormal>(`${this.url}/save`,x)
+    return this.http.post<ResponseApi>(`${this.url}/save`,x)
     .pipe(
       catchError(this.handleError)
     );

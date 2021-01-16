@@ -1,3 +1,4 @@
+import { GuardService } from './../services/guard.service';
 import { FormFamiliaComponent } from './familia/form-familia/form-familia.component';
 import { FamiliaComponent } from './familia/familia.component';
 import { FormIdiomaComponent } from './idioma/form-idioma/form-idioma.component';
@@ -27,47 +28,58 @@ const routes: Routes = [
       },
       {
         path: 'datos-personales',
-        component: DatosPersonalesComponent
+        component: DatosPersonalesComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'exp-laboral',
-        component: ExperienciaLaboralComponent
+        component: ExperienciaLaboralComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'exp-laboral/form',
-        component: FormExperienciaLaboralComponent
+        component: FormExperienciaLaboralComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'edu-formal',
-        component: EstudioFormalComponent
+        component: EstudioFormalComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'edu-formal/form',
-        component: FormEstudioFormalComponent
+        component: FormEstudioFormalComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'edu-noformal',
-        component: EstudioNoformalComponent
+        component: EstudioNoformalComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'edu-noformal/form',
-        component: FormEstudioNoFormalComponent
+        component: FormEstudioNoFormalComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'idiomas',
-        component: IdiomaComponent
+        component: IdiomaComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'idiomas/form',
-        component: FormIdiomaComponent
+        component: FormIdiomaComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'familiares',
-        component: FamiliaComponent
+        component: FamiliaComponent,
+        canActivate:[GuardService]
       },
       {
         path: 'familiares/form',
-        component: FormFamiliaComponent
+        component: FormFamiliaComponent,
+        canActivate:[GuardService]
       }
 
 

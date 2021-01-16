@@ -56,8 +56,8 @@
         <mat-form-field appearance="outline">
           <mat-label>Grado de instruccion</mat-label>
           <mat-select formControlName="tipoInstruccion">
-            <mat-option *ngFor="let t of tiposInstruccion" [value]="t.cod">
-              {{t.des}}
+            <mat-option *ngFor="let t of tiposInstruccion" [value]="t.idDato">
+              {{t.glsDato}}
             </mat-option>
           </mat-select>
         </mat-form-field>

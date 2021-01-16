@@ -34,7 +34,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
   postulante: DatosPersonal;
   idExperiencia: string;
   archivo = new DatoArchivo();
-  idProceso = '00024';
+  idProceso = '00027';
 
   @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
 
@@ -81,7 +81,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.idExperiencia = this.route.snapshot.paramMap.get('exp'))
+
     this.idUserWeb = sessionStorage.getItem('ID-USER');
     this.idExperiencia = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idExperiencia);
@@ -265,10 +265,9 @@ export class FormExperienciaLaboralComponent implements OnInit {
         })
       )
       .subscribe(result => {
-        console.log('result',result)
 
         this.archivo.idCodigoRelacional = result.idEntity
-        this.archivo.idProceso = '00025'
+        this.archivo.idProceso = this.idProceso
         this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
         this.archivo.numeroDocumento= this.postulante.numeroDocumento
         this.upload.uploadFiles(this.archivo);

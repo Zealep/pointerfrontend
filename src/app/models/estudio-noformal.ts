@@ -3,9 +3,9 @@ export class EstudioNoFormal{
   idEmpresa: string;
   idPostulante: string;
   idDatoModalidadAcademica: string;
-  idDatoNombreEstudio: string;
+  idCarreraEducativa: string;
   nombreEstudioEspecifico: string;
-  idDatoCentroEstudio:string;
+  idTipoInstitucion:string;
   nombreCentroEstudio: string;
   idDatoPais: string;
   idDpto: string;

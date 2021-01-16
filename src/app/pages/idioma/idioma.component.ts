@@ -1,3 +1,4 @@
+import { IdiomaDTO } from './../../models/dto/idioma-dto';
 import { ConfirmDialogModel } from 'src/app/shared/models/confirm-dialog-model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,9 +18,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class IdiomaComponent implements OnInit {
 
-  idiomas: Idioma[] = [];
+  idiomas: IdiomaDTO[] = [];
   displayedColumns:string[] = ['idioma','oral','lectura','escritura','acciones'];
-  dataSource: MatTableDataSource<Idioma>;
+  dataSource: MatTableDataSource<IdiomaDTO>;
   idUserWeb: string;
 
 
@@ -60,7 +61,8 @@ export class IdiomaComponent implements OnInit {
      }
 
      private load(){
-       this.idiomaService.getIdiomasByPostulante(this.idUserWeb).subscribe(data => {
+       this.idiomaService.getIdiomasDTOByPostulante(this.idUserWeb).subscribe(data => {
+
          let idiomas = JSON.parse(JSON.stringify(data));
          this.dataSource = new MatTableDataSource(idiomas);
          this.dataSource.paginator = this.paginator;

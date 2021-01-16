@@ -1,3 +1,4 @@
+import { EstudioNoFormalDTO } from './../../models/dto/no-formal-dto';
 import { ConfirmDialogModel } from 'src/app/shared/models/confirm-dialog-model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,9 +18,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class EstudioNoformalComponent implements OnInit {
 
-  estudios: EstudioNoFormal[] = [];
+  estudios: EstudioNoFormalDTO[] = [];
   displayedColumns:string[] = ['nombre','institucion','fechaInicio','fechaFin','acciones'];
-  dataSource: MatTableDataSource<EstudioNoFormal>;
+  dataSource: MatTableDataSource<EstudioNoFormalDTO>;
   idUserWeb: string;
 
 
@@ -60,7 +61,7 @@ export class EstudioNoformalComponent implements OnInit {
      }
 
      private load(){
-       this.estudioService.getEstudiosNoFormalByPostulante(this.idUserWeb).subscribe(data => {
+       this.estudioService.getNoFormalesDTOByPostulante(this.idUserWeb).subscribe(data => {
          let estudios = JSON.parse(JSON.stringify(data));
          this.dataSource = new MatTableDataSource(estudios);
          this.dataSource.paginator = this.paginator;

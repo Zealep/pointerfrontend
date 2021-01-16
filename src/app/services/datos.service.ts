@@ -1,52 +1,52 @@
-import { DiscapacidadDTO } from './../models/dto/discapacidad-dto';
-import { Discapacidad } from './../models/discapacidad';
-import { ResponseApi } from '../models/response-api';
+import { CarreraDTO } from './../models/dto/carrera-dto';
+import { InstitucionDTO } from './../models/dto/institucion-dto';
+import { Datos } from './../models/datos';
+import { Combo } from '../models/dto/combo';
+import { ID_EMPRESA } from '../shared/var.constant';
+import { RequestCombo } from '../models/dto/request-combo';
+import { Menu } from '../models/menu';
 import { catchError } from 'rxjs/operators';
 import { HOST } from '../shared/var.constant';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TipoDocumento } from '../models/TipoDocumento';
 import { throwError } from 'rxjs';
-import { AreaInteres } from '../models/area-interes';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DiscapacidadService {
+export class DatosService {
 
-  private url: string = `${HOST}/discapacidad`;
+  private url: string = `${HOST}/datos`;
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  getDiscapacidades(id:String) {
-    return this.http.get<Discapacidad[]>(`${this.url}/findByPostulante/${id}`)
+  getGradoIntruccion() {
+    return this.http.get<Datos[]>(`${this.url}/gradoInstruccion`)
     .pipe(
       catchError(this.handleError)
     );
   }
 
-  getDiscapacidadesDTOByPostulante(id: string) {
-    return this.http.get<DiscapacidadDTO[]>(`${this.url}/getDetailsByPostulante/${id}`)
+  getInstituciones() {
+    return this.http.get<InstitucionDTO[]>(`${this.url}/institucion`)
     .pipe(
       catchError(this.handleError)
     );
   }
 
 
-  save(a : Discapacidad) {
-    return this.http.post<ResponseApi>(`${this.url}/save`,a)
+  getCarreras(id:string) {
+    return this.http.get<CarreraDTO[]>(`${this.url}/carreras/${id}`)
     .pipe(
       catchError(this.handleError)
     );
   }
 
-  delete(id:string) {
-    return this.http.delete<ResponseApi>(`${this.url}/delete/${id}`)
-    .pipe(
-      catchError(this.handleError)
-    );
-  }
+
+
 
 
   private handleError(error: HttpErrorResponse) {

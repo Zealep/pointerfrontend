@@ -1,3 +1,10 @@
+import { UploadFilesComponent } from 'src/app/shared/components/upload-files/upload-files.component';
+import { DatosPersonal } from './../../../models/datos-personal';
+import { DatoArchivo } from './../../../models/dato-archivo';
+import { CarreraDTO } from './../../../models/dto/carrera-dto';
+import { Datos } from './../../../models/datos';
+import { InstitucionDTO } from './../../../models/dto/institucion-dto';
+import { DatosService } from './../../../services/datos.service';
 import { catchError } from 'rxjs/operators';
 import { DatosPersonalService } from './../../../services/datos-personal.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -5,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MenuService } from './../../../services/menu.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Combo } from './../../../models/dto/combo';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EstudioFormalService } from 'src/app/services/estudio-formal.service';
 import { EMPTY } from 'rxjs';
 import { EstudioFormal } from 'src/app/models/estudio-formal';
@@ -18,14 +25,18 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class FormEstudioFormalComponent implements OnInit {
 
-  tiposModalidad: Combo[] = []
-  tiposEstudio: Combo[] = []
+  tiposModalidad: Datos[] = []
+  tiposEstudio: CarreraDTO[] = []
   tiposTiempo: Combo[] = []
-  tiposCentro: Combo[] = [];
+  tiposCentro: InstitucionDTO[] = [];
   tiposSituacion: Combo[] = [];
   idUserWeb: string;
   idPostulante: string;
   idEstudio: string;
+  idProceso = '00025';
+  archivo = new DatoArchivo();
+  postulante: DatosPersonal;
+  @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
 
 
   form: FormGroup = new FormGroup({
@@ -52,19 +63,55 @@ export class FormEstudioFormalComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
+    private datosService:DatosService,
     private datosPersonalService: DatosPersonalService
   ) { }
 
   ngOnInit(): void {
-    console.log(this.idEstudio = this.route.snapshot.paramMap.get('exp'))
     this.idUserWeb = sessionStorage.getItem('ID-USER');
     this.idEstudio = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idEstudio);
+    this.getDatosPostulante();
     this.getIdPostulante();
     this.getTiposSituacion();
     this.getTiposTiempo();
+    this.getInstituciones();
+    this.getModalidad();
 
   }
+
+  getDatosPostulante(){
+    this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
+    .subscribe(data=>{
+      this.postulante = data;
+    })
+  }
+
+  onSelectInstitucion(dato: string) {
+    this.getCarreras(dato);
+  }
+
+  getCarreras(dato:string){
+    this.datosService.getCarreras(dato).subscribe(data => {
+
+      this.tiposEstudio = data
+      console.log(this.tiposEstudio)
+    });
+  }
+
+  getModalidad(){
+    this.datosService.getGradoIntruccion().subscribe(data => {
+      this.tiposModalidad = data
+    });
+  }
+
+  getInstituciones(){
+    this.datosService.getInstituciones().subscribe(data => {
+      this.tiposCentro = data
+    });
+  }
+
+
 
   getTiposSituacion(){
     this.menuService.getTiposSituacion().subscribe(data => {
@@ -90,12 +137,14 @@ export class FormEstudioFormalComponent implements OnInit {
           })
         )
         .subscribe(dato => {
+          console.log(dato)
+          this.onSelectInstitucion(dato.idTipoInstitucion);
 
           this.form = new FormGroup({
             'modalidad': new FormControl(dato.idDatoModalidadAcademica),
-            'tipoEstudio': new FormControl(dato.idDatoNombreEstudio),
+            'tipoEstudio': new FormControl(dato.idCarreraEducativa),
             'nombre': new FormControl(dato.nombreEstudioEspecifico),
-            'tipoCentro': new FormControl(dato.idDatoCentroEstudio),
+            'tipoCentro': new FormControl(dato.idTipoInstitucion),
             'tipoSituacion': new FormControl(dato.idDatoSituacionEstudio),
             'tiempoEstudiado': new FormControl(dato.tiempoEstudiado),
             'tipoTiempo': new FormControl(dato.idDatoUnidadTiempo),
@@ -130,9 +179,9 @@ export class FormEstudioFormalComponent implements OnInit {
 
     exp.idPostulante = this.idPostulante;
     exp.idDatoModalidadAcademica = this.form.get('modalidad').value;
-    exp.idDatoNombreEstudio = this.form.get('tipoEstudio').value;
+    exp.idCarreraEducativa = this.form.get('tipoEstudio').value;
     exp.nombreEstudioEspecifico = this.form.get('nombre').value;
-    exp.idDatoCentroEstudio = this.form.get('tipoCentro').value;
+    exp.idTipoInstitucion = this.form.get('tipoCentro').value;
     exp.idDatoSituacionEstudio = this.form.get('tipoSituacion').value;
     exp.tiempoEstudiado = this.form.get('tiempoEstudiado').value;
     exp.idDatoUnidadTiempo = this.form.get('tipoTiempo').value;
@@ -148,7 +197,6 @@ export class FormEstudioFormalComponent implements OnInit {
     this.estudioService.save(exp)
       .pipe(
         catchError(response => {
-          console.log('response', response);
           this.snackBar.open(response, 'Cerrar', {
             duration: 3000
           });
@@ -157,6 +205,13 @@ export class FormEstudioFormalComponent implements OnInit {
       )
       .subscribe(result => {
         this.clear();
+
+        this.archivo.idCodigoRelacional = result.idEntity
+        this.archivo.idProceso = this.idProceso
+        this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
+        this.archivo.numeroDocumento= this.postulante.numeroDocumento
+        this.upload.uploadFiles(this.archivo);
+
         if (this.idEstudio == null) {
           this.snackBar.open('Se registro los datos del estudio formal', 'Cerrar', {
             duration: 3000

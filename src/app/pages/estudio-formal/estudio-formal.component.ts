@@ -1,3 +1,4 @@
+import { EstudioFormalDTO } from './../../models/dto/formal-dto';
 import { ConfirmDialogModel } from 'src/app/shared/models/confirm-dialog-model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,9 +18,9 @@ import { EstudioFormalService } from 'src/app/services/estudio-formal.service';
 })
 export class EstudioFormalComponent implements OnInit {
 
-  estudios: EstudioFormal[] = [];
+  estudios: EstudioFormalDTO[] = [];
   displayedColumns:string[] = ['modalidad','titulo','institucion','fechaInicio','fechaFin','acciones'];
-  dataSource: MatTableDataSource<EstudioFormal>;
+  dataSource: MatTableDataSource<EstudioFormalDTO>;
   idUserWeb: string;
 
 
@@ -60,7 +61,7 @@ export class EstudioFormalComponent implements OnInit {
      }
 
      private load(){
-       this.estudioService.getEstudiosFormalByPostulante(this.idUserWeb).subscribe(data => {
+       this.estudioService.getFormalesDTOByPostulante(this.idUserWeb).subscribe(data => {
          let experiencias = JSON.parse(JSON.stringify(data));
          this.dataSource = new MatTableDataSource(experiencias);
          this.dataSource.paginator = this.paginator;

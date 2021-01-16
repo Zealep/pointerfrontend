@@ -1,3 +1,10 @@
+import { UploadFilesComponent } from 'src/app/shared/components/upload-files/upload-files.component';
+import { DatosPersonal } from './../../../models/datos-personal';
+import { DatoArchivo } from './../../../models/dato-archivo';
+import { Datos } from './../../../models/datos';
+import { DatosService } from './../../../services/datos.service';
+import { CarreraDTO } from './../../../models/dto/carrera-dto';
+import { InstitucionDTO } from './../../../models/dto/institucion-dto';
 import { EstudioNoFormal } from './../../../models/estudio-noformal';
 import { catchError } from 'rxjs/operators';
 import { DatosPersonalService } from './../../../services/datos-personal.service';
@@ -6,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MenuService } from './../../../services/menu.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Combo } from './../../../models/dto/combo';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EstudioNoFormalService } from 'src/app/services/estudio-noformal.service';
 import { EMPTY } from 'rxjs';
 
@@ -17,10 +24,10 @@ import { EMPTY } from 'rxjs';
 })
 export class FormEstudioNoFormalComponent implements OnInit {
 
-  tiposModalidad: Combo[] = []
-  tiposEstudio: Combo[] = []
+  tiposModalidad: Datos[] = []
+  tiposEstudio: CarreraDTO[] = []
   tiposTiempo: Combo[] = []
-  tiposCentroEstudio: Combo[] = []
+  tiposCentroEstudio: InstitucionDTO[] = []
   pais: Combo[] = [];
   departamento: Combo[] = [];
   provincia: Combo[] = [];
@@ -28,6 +35,10 @@ export class FormEstudioNoFormalComponent implements OnInit {
   idUserWeb: string;
   idPostulante: string;
   idEstudio: string;
+  idProceso = '00026';
+  archivo = new DatoArchivo();
+  postulante: DatosPersonal;
+  @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
 
 
   form: FormGroup = new FormGroup({
@@ -54,6 +65,7 @@ export class FormEstudioNoFormalComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
+    private datosService:DatosService,
     private datosPersonalService: DatosPersonalService
   ) { }
 
@@ -62,10 +74,45 @@ export class FormEstudioNoFormalComponent implements OnInit {
     this.idUserWeb = sessionStorage.getItem('ID-USER');
     this.idEstudio = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idEstudio);
+    this.getDatosPostulante();
     this.getPais();
     this.getIdPostulante();
     this.getTiposTiempo();
+    this.getInstituciones();
+    this.getModalidad();
   }
+
+  getDatosPostulante(){
+    this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
+    .subscribe(data=>{
+      this.postulante = data;
+    })
+  }
+
+  onSelectInstitucion(dato: string) {
+    this.getCarreras(dato);
+  }
+
+  getCarreras(dato:string){
+    this.datosService.getCarreras(dato).subscribe(data => {
+
+      this.tiposEstudio = data
+      console.log(this.tiposEstudio)
+    });
+  }
+
+  getModalidad(){
+    this.datosService.getGradoIntruccion().subscribe(data => {
+      this.tiposModalidad = data
+    });
+  }
+
+  getInstituciones(){
+    this.datosService.getInstituciones().subscribe(data => {
+      this.tiposCentroEstudio = data
+    });
+  }
+
 
   getTiposTiempo(){
     this.menuService.getTiposTiempo().subscribe(data => {
@@ -124,15 +171,16 @@ export class FormEstudioNoFormalComponent implements OnInit {
         )
         .subscribe(dato => {
 
+          this.onSelectInstitucion(dato.idTipoInstitucion);
           this.onSelectPais(dato.idDatoPais);
           this.onSelectDepartamento(dato.idDatoPais + dato.idDpto);
           this.onSelectProvincia(dato.idDatoPais + dato.idDpto + dato.idProv);
 
           this.form = new FormGroup({
             'modalidad': new FormControl(dato.idDatoModalidadAcademica),
-            'tipoEstudio': new FormControl(dato.idDatoNombreEstudio),
+            'tipoEstudio': new FormControl(dato.idCarreraEducativa),
             'nombre': new FormControl(dato.nombreEstudioEspecifico),
-            'tipoCentroEstudio': new FormControl(dato.idDatoCentroEstudio),
+            'tipoCentroEstudio': new FormControl(dato.idTipoInstitucion),
             'nombreCentro': new FormControl(dato.nombreCentroEstudio),
             'idDatoPais': new FormControl(dato.idDatoPais),
             'idDpto': new FormControl(dato.idDpto),
@@ -167,9 +215,9 @@ export class FormEstudioNoFormalComponent implements OnInit {
 
     exp.idPostulante = this.idPostulante;
     exp.idDatoModalidadAcademica = this.form.get('modalidad').value;
-    exp.idDatoNombreEstudio = this.form.get('tipoEstudio').value;
+    exp.idCarreraEducativa = this.form.get('tipoEstudio').value;
     exp.nombreEstudioEspecifico = this.form.get('nombre').value;
-    exp.idDatoCentroEstudio = this.form.get('tipoCentroEstudio').value;
+    exp.idTipoInstitucion = this.form.get('tipoCentroEstudio').value;
     exp.nombreCentroEstudio = this.form.get('nombreCentro').value;
     exp.idDatoPais = this.form.get('idDatoPais').value;
     exp.idDpto = this.form.get('idDpto').value;
@@ -185,7 +233,6 @@ export class FormEstudioNoFormalComponent implements OnInit {
     this.estudioService.save(exp)
       .pipe(
         catchError(response => {
-          console.log('response', response);
           this.snackBar.open(response, 'Cerrar', {
             duration: 3000
           });
@@ -194,6 +241,12 @@ export class FormEstudioNoFormalComponent implements OnInit {
       )
       .subscribe(result => {
         this.clear();
+        this.archivo.idCodigoRelacional = result.idEntity
+        this.archivo.idProceso = this.idProceso
+        this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
+        this.archivo.numeroDocumento= this.postulante.numeroDocumento
+        this.upload.uploadFiles(this.archivo);
+
         if (this.idEstudio == null) {
           this.snackBar.open('Se registro los datos del estudio no formal', 'Cerrar', {
             duration: 3000

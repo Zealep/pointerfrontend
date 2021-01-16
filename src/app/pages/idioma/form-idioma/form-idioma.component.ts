@@ -1,3 +1,6 @@
+import { DatosPersonal } from './../../../models/datos-personal';
+import { DatoArchivo } from './../../../models/dato-archivo';
+import { UploadFilesComponent } from 'src/app/shared/components/upload-files/upload-files.component';
 import { catchError } from 'rxjs/operators';
 import { DatosPersonalService } from './../../../services/datos-personal.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,7 +9,7 @@ import { MenuService } from './../../../services/menu.service';
 import { IdiomaService } from './../../../services/idioma.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Combo } from './../../../models/dto/combo';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EMPTY } from 'rxjs';
 import { Idioma } from 'src/app/models/idioma';
 
@@ -21,6 +24,10 @@ export class FormIdiomaComponent implements OnInit {
   idUserWeb: string;
   idPostulante: string;
   idIdioma: string;
+  idProceso = '00029';
+  archivo = new DatoArchivo();
+  postulante: DatosPersonal;
+  @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
 
 
   form: FormGroup = new FormGroup({
@@ -45,9 +52,17 @@ export class FormIdiomaComponent implements OnInit {
     this.idUserWeb = sessionStorage.getItem('ID-USER');
     this.idIdioma = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idIdioma);
+    this.getDatosPostulante();
     this.getIdPostulante();
     this.getTiposNiveles();
 
+  }
+
+  getDatosPostulante(){
+    this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
+    .subscribe(data=>{
+      this.postulante = data;
+    })
   }
 
   getTiposNiveles(){
@@ -115,6 +130,11 @@ export class FormIdiomaComponent implements OnInit {
       )
       .subscribe(result => {
         this.clear();
+        this.archivo.idCodigoRelacional = result.idEntity
+        this.archivo.idProceso = this.idProceso
+        this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
+        this.archivo.numeroDocumento= this.postulante.numeroDocumento
+        this.upload.uploadFiles(this.archivo);
         if (this.idIdioma == null) {
           this.snackBar.open('Se registro los datos del idioma', 'Cerrar', {
             duration: 3000

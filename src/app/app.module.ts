@@ -1,8 +1,9 @@
+import { GuardService } from './services/guard.service';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './shared/material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +30,9 @@ registerLocaleData(es);
     HttpClientModule,
     FlexLayoutModule
   ],
-  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+  providers: [GuardService,{
+    provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    { provide: LOCALE_ID, useValue: "es-ES"},
     JwtHelperService],
   bootstrap: [AppComponent]
 })

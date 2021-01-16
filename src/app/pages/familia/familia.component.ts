@@ -1,3 +1,4 @@
+import { FamiliaDTO } from './../../models/dto/familia-dto';
 import { ConfirmDialogModel } from 'src/app/shared/models/confirm-dialog-model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,9 +18,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class FamiliaComponent implements OnInit {
 
-  familiares: Familia[] = [];
+  familiares: FamiliaDTO[] = [];
   displayedColumns:string[] = ['tipoDocumento','numeroDocumento','nombres','apellidos','vinculo','acciones'];
-  dataSource: MatTableDataSource<Familia>;
+  dataSource: MatTableDataSource<FamiliaDTO>;
   idUserWeb: string;
 
 
@@ -60,7 +61,7 @@ export class FamiliaComponent implements OnInit {
      }
 
      private load(){
-       this.familiaService.getFamiliasByPostulante(this.idUserWeb).subscribe(data => {
+       this.familiaService.getFamiliasDTOByPostulante(this.idUserWeb).subscribe(data => {
          let familiares = JSON.parse(JSON.stringify(data));
          console.log(familiares);
          this.dataSource = new MatTableDataSource(familiares);

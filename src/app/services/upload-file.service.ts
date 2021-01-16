@@ -25,8 +25,8 @@ export class UploadFileService {
     //return this.http.post<ResponseApi>(`${this.baseUrl}/save`,formData).toPromise();
   }
 
-  getFiles(id:string){
-    return this.http.get<DatoArchivo[]>(`${this.baseUrl}/getByCodigoRelacional/${id}`);
+  getFiles(id:string,proceso:string){
+    return this.http.get<DatoArchivo[]>(`${this.baseUrl}/getByCodigoRelacional/${id}/${proceso}`);
   }
 
   download(path: string): Observable<Blob> {

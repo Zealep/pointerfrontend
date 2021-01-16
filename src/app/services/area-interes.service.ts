@@ -1,3 +1,4 @@
+import { AreaInteresDTO } from './../models/dto/area-interes-dto';
 import { ResponseApi } from '../models/response-api';
 import { catchError } from 'rxjs/operators';
 import { HOST } from '../shared/var.constant';
@@ -20,6 +21,12 @@ export class AreaInteresService {
 
   getAreasInteres(id:String) {
     return this.http.get<AreaInteres[]>(`${this.url}/findByPostulante/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+  getAreasDTOByPostulante(id: string) {
+    return this.http.get<AreaInteresDTO[]>(`${this.url}/getDetailsByPostulante/${id}`)
     .pipe(
       catchError(this.handleError)
     );

@@ -9,8 +9,17 @@
         <mat-form-field appearance="outline">
           <mat-label>Modalidad academica</mat-label>
           <mat-select formControlName="modalidad">
-            <mat-option *ngFor="let t of tiposModalidad" [value]="t.cod">
-              {{t.des}}
+            <mat-option *ngFor="let t of tiposModalidad" [value]="t.idDato">
+              {{t.glsDato}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo centro de estudio</mat-label>
+          <mat-select formControlName="tipoCentroEstudio" (ngModelChange)="onSelectInstitucion($event)">
+            <mat-option *ngFor="let t of tiposCentroEstudio" [value]="t.idInstitucion">
+              {{t.glsInstitucion}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -18,8 +27,8 @@
         <mat-form-field appearance="outline">
           <mat-label>Tipo de estudio</mat-label>
           <mat-select formControlName="tipoEstudio">
-            <mat-option *ngFor="let t of tiposEstudio" [value]="t.cod">
-              {{t.des}}
+            <mat-option *ngFor="let t of tiposEstudio" [value]="t.idCarreraEducativa">
+              {{t.glsCarreraEducativ}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -29,14 +38,7 @@
           <input matInput formControlName="nombre">
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Tipo centro de estudio</mat-label>
-          <mat-select formControlName="tipoCentroEstudio">
-            <mat-option *ngFor="let t of tiposCentroEstudio" [value]="t.cod">
-              {{t.des}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+
 
         <mat-form-field appearance="outline">
           <mat-label>Nombre del centro de estudios</mat-label>
@@ -119,6 +121,11 @@
           <mat-label>Numero de folio</mat-label>
           <input matInput formControlName="numeroFolio">
         </mat-form-field>
+
+        <div class="upload">
+          <app-upload-files [id]="this.idEstudio" [idProceso]="this.idProceso">
+          </app-upload-files>
+        </div>
 
       </div>
     </form>

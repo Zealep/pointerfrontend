@@ -55,9 +55,8 @@ export class UploadFilesComponent implements OnInit {
   }
 
   getFiles(){
-    console.log('obtener files', this.id)
     if(this.id!=null){
-      this.uploadService.getFiles(this.id).subscribe
+      this.uploadService.getFiles(this.id,this.idProceso).subscribe
       (x=>{
         this.fileInfos=x;
       })

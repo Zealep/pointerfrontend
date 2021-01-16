@@ -3,9 +3,9 @@ export class EstudioFormal {
   idEmpresa: string;
   idPostulante: string;
   idDatoModalidadAcademica: string;
-  idDatoNombreEstudio: string;
+  idTipoInstitucion : string;
+  idCarreraEducativa : string;
   nombreEstudioEspecifico: string;
-  idDatoCentroEstudio: string;
   idDatoSituacionEstudio: string;
   tiempoEstudiado: number;
   idDatoUnidadTiempo: string;

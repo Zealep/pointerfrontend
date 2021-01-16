@@ -1,3 +1,5 @@
+import { DatosService } from './../../../services/datos.service';
+import { Datos } from './../../../models/datos';
 import { TipoDocumentoService } from './../../../services/tipo-documento.service';
 import { Familia } from './../../../models/familia';
 import { catchError } from 'rxjs/operators';
@@ -22,7 +24,7 @@ export class FormFamiliaComponent implements OnInit {
   tiposDocumento: TipoDocumento[] = []
   tiposGenero: Combo[] = []
   tiposParentesco: Combo[] = []
-  tiposInstruccion: Combo[] = []
+  tiposInstruccion: Datos[] = []
   pais: Combo[] = [];
   departamento: Combo[] = [];
   provincia: Combo[] = [];
@@ -57,7 +59,8 @@ export class FormFamiliaComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private datosPersonalService: DatosPersonalService,
-    private tipoDocumentoService: TipoDocumentoService
+    private tipoDocumentoService: TipoDocumentoService,
+    private datosSevice: DatosService
   ) { }
 
   ngOnInit(): void {
@@ -69,6 +72,13 @@ export class FormFamiliaComponent implements OnInit {
     this.getTiposDocumentos();
     this.getGeneros();
     this.getParentescos();
+    this.getGradosIntruccion();
+  }
+
+  getGradosIntruccion(){
+    this.datosSevice.getGradoIntruccion().subscribe(data => {
+      this.tiposInstruccion = data
+    });
   }
 
   getTiposDocumentos() {

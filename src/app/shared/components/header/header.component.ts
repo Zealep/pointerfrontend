@@ -1,3 +1,4 @@
+import { UsuarioService } from './../../../services/usuario.service';
 import { MenuService } from './../../../services/menu.service';
 import { Menu } from './../../../models/menu';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,8 @@ export class HeaderComponent implements OnInit {
 
   menus:Menu[] = [];
 
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService,
+    private usuarioService:UsuarioService) { }
 
   ngOnInit(): void {
     this.getMenus();
@@ -22,6 +24,9 @@ export class HeaderComponent implements OnInit {
     .subscribe(data =>{
       this.menus = data;
     })
+  }
+  cerrarSesion(){
+    this.usuarioService.cerrarSesion();
   }
 
 }

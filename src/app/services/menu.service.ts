@@ -135,6 +135,18 @@ export class MenuService {
     );
   }
 
+  getDiscapacidades(){
+    let req = new RequestCombo();
+    req.idEmpresa = ID_EMPRESA
+    req.table = 'DATO'
+    req.dato = 'DM'
+
+    return this.http.post<Combo[]>(`${this.url}/select`,req)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getCargo(){
     let req = new RequestCombo();
     req.idEmpresa = ID_EMPRESA

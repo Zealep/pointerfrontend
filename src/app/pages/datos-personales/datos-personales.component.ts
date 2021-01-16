@@ -1,3 +1,7 @@
+import { DiscapacidadDTO } from './../../models/dto/discapacidad-dto';
+import { DatoArchivo } from './../../models/dato-archivo';
+import { UploadFilesComponent } from './../../shared/components/upload-files/upload-files.component';
+import { AreaInteresDTO } from './../../models/dto/area-interes-dto';
 import { DiscapacidadService } from './../../services/discapacidad.service';
 import { AreaInteresService } from './../../services/area-interes.service';
 import { AreaInteres } from './../../models/area-interes';
@@ -11,7 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsuarioService } from './../../services/usuario.service';
 import { TipoDocumentoService } from './../../services/tipo-documento.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TipoDocumento } from 'src/app/models/TipoDocumento';
 import { EMPTY, forkJoin, Observable } from 'rxjs';
 import { DatosPersonal } from 'src/app/models/datos-personal';
@@ -38,12 +42,22 @@ export class DatosPersonalesComponent implements OnInit {
   distritoResidencia: Combo[] = [];
   idUserWeb: string;
   areas: Combo[] = [];
-  discapacidades: Combo[] = [];
-  areasPostulante: AreaInteres[]=[];
-  discapacidadPostulante: Discapacidad[]=[];
+  areasPostulante: AreaInteresDTO[]=[];
   displayedColumns: string[] = ['nombre','acciones'];
+  idProceso = '00024';
+  archivo = new DatoArchivo();
+  postulante = new DatosPersonal();
 
-  dataAreas: MatTableDataSource<AreaInteres>;
+  discapacidades: Combo[] = [];
+  tipoDiscapacidad: string;
+  porcentageDiscapacidad: number;
+  displayedColumnsDisca: string[] = ['discapacidad','porcentaje','accionesDisca'];
+  discapacidadPostulante: DiscapacidadDTO[]=[];
+
+  @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
+
+  dataAreas: MatTableDataSource<AreaInteresDTO>;
+  dataDiscapacidad: MatTableDataSource<DiscapacidadDTO>;
 
 
   tipoVia: Combo[] = [];
@@ -114,10 +128,20 @@ export class DatosPersonalesComponent implements OnInit {
     this.getMotivoEntero();
     this.getCargo();
     this.getAreasByPostulante();
-    //this.getDiscapacidadByPostulante();
+    this.getDiscapacidadByPostulante();
     this.cargar();
     this.getAreas();
+    this.getDatosPostulante();
+    this.getDiscapacidades();
   }
+
+  getDatosPostulante(){
+    this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
+    .subscribe(data=>{
+      this.postulante = data;
+    })
+  }
+
   onSelectPaisNacimiento(dato: string) {
     this.getDepartamentoNacimiento(dato);
   }
@@ -147,9 +171,17 @@ export class DatosPersonalesComponent implements OnInit {
 
   }
 
+
+
   getTiposDocumentos() {
     this.tipoDocumentoService.getUsers().subscribe(data => {
       this.tiposDocumento = data
+    });
+  }
+
+  getDiscapacidades() {
+    this.menuService.getDiscapacidades().subscribe(data => {
+      this.discapacidades = data
     });
   }
 
@@ -244,21 +276,47 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   getAreasByPostulante(){
-    this.areaInteresService.getAreasInteres(this.idUserWeb)
+    this.areaInteresService.getAreasDTOByPostulante(this.idUserWeb)
     .subscribe(datos =>{
-      console.log(datos);
-      this.dataAreas = new MatTableDataSource(datos);
+       this.dataAreas = new MatTableDataSource(datos);
         this.areasPostulante = datos;
     })
   }
 
   getDiscapacidadByPostulante(){
-    this.discapacidadService.getDiscapacidades(this.idUserWeb)
+    this.discapacidadService.getDiscapacidadesDTOByPostulante(this.idUserWeb)
     .subscribe(datos =>{
+      this.dataDiscapacidad = new MatTableDataSource(datos);
         this.discapacidadPostulante = datos;
     })
   }
 
+  borrarArea(id:string){
+    this.areaInteresService.delete(id)
+    .subscribe(x =>{
+      this.getAreasByPostulante();
+  })
+}
+
+borrarDiscapacidad(id:string){
+  this.discapacidadService.delete(id)
+  .subscribe(x =>{
+    this.getDiscapacidadByPostulante();
+})
+}
+
+agregarDiscapacidad(){
+  if(this.tipoDiscapacidad == null || this.porcentageDiscapacidad == null){
+    alert("Ingresa todos los datos de la discapacidad")
+  }
+  let  d = new Discapacidad();
+  d.idPostulante = this.idUserWeb;
+  d.idTipoDiscapacidad = this.tipoDiscapacidad;
+  d.porcentajeDiscapacidad = this.porcentageDiscapacidad;
+  this.discapacidadService.save(d).subscribe(x=>{
+    this.getDiscapacidadByPostulante();
+  })
+}
 
   cargar() {
 
@@ -272,7 +330,6 @@ export class DatosPersonalesComponent implements OnInit {
         })
       )
       .subscribe(dato => {
-        console.log(dato);
 
         this.onSelectPaisNacimiento(dato.idDatoPaisNacimiento);
         this.onSelectDepartamentoNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento);
@@ -371,7 +428,7 @@ export class DatosPersonalesComponent implements OnInit {
     datos.idMedioInformativo = this.form.get('idMedioInformativo').value;
     datos.indTieneDiscapacidad = this.form.get('indTieneDiscapacidad').value;
     datos.numeroConadis = this.form.get('numeroConadis').value;
-    
+
     this.datosPersonalService.save(datos)
       .pipe(
         catchError(response => {
@@ -383,13 +440,19 @@ export class DatosPersonalesComponent implements OnInit {
         })
       )
       .subscribe(result => {
+        this.archivo.idCodigoRelacional = result.idEntity
+        this.archivo.idProceso = this.idProceso
+        this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
+        this.archivo.numeroDocumento= this.postulante.numeroDocumento
+        this.upload.uploadFiles(this.archivo);
+
         this.snackBar.open('Los datos personales del postulante fueron actualizados', 'Cerrar', {
           duration: 3000
         });
 
 
       });
-      
+
 
   }
 
@@ -402,7 +465,7 @@ export class DatosPersonalesComponent implements OnInit {
       this.getAreasByPostulante();
       this.refreshDataSource();
     })
-    
+
   }
 
   loadAreas(){

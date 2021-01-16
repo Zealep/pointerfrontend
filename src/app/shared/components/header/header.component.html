@@ -1,14 +1,22 @@
 <mat-toolbar>
+<mat-toolbar-row>
 
+  <div>
   <a [routerLink]="'/pages/datos-personales'">
     <img src="./assets/images/pointererp.png" width="150" height="80"/>
   </a>
-</mat-toolbar>
-<mat-toolbar color="primary">
+</div>
+  <span class="menu-spacer"></span>
     <div class="buttons">
     <button mat-button *ngFor="let m of menus" [routerLink]="'/pages'+m.urlOperacion">
       {{m.nombreMenuWeb}}
     </button>
     </div>
+  <div>
+    <button mat-button (click)="cerrarSesion()">
+      <mat-icon>logout</mat-icon> Cerrar sesión
+    </button>
+  </div>
 
+  </mat-toolbar-row>
 </mat-toolbar>
