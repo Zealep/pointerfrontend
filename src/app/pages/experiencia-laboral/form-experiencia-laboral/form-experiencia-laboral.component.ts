@@ -12,7 +12,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EMPTY } from 'rxjs';
 import { UploadFilesComponent } from 'src/app/shared/components/upload-files/upload-files.component';
 import { DatosPersonal } from 'src/app/models/datos-personal';
-import { ThrowStmt } from '@angular/compiler';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-form-experiencia-laboral',
@@ -36,7 +36,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
   archivo = new DatoArchivo();
   idProceso = '00027';
 
-  @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
+  @ViewChild(UploadFilesComponent) upload: UploadFilesComponent
 
 
   form: FormGroup = new FormGroup({
@@ -90,22 +90,54 @@ export class FormExperienciaLaboralComponent implements OnInit {
     this.getTipoEmpresas();
     this.getTipoActividades();
     this.getTipoDedicacion();
+  }
+
+
+  calcularTiempo(event) {
+
+    let i = this.form.get('fechaIngreso').value;
+    let r = this.form.get('fechaRetiro').value;
+
+    if(i !='' && r !=''){
+
+      let ingreso = moment(new Date(i));
+      let retiro = moment(new Date(r));
+
+      if(ingreso.isAfter(retiro)){
+        alert('La fecha de ingreso no puede ser mayor a la fecha de retiro')
+        return;
+      }
+
+      var years = retiro.diff(ingreso, 'year');
+      ingreso.add(years, 'years');
+
+      var months = retiro.diff(ingreso, 'months');
+      ingreso.add(months, 'months');
+
+      var days = retiro.diff(ingreso, 'days');
+
+      this.form.controls['añosTrabajados'].setValue(years);
+      this.form.controls['mesesTrabajados'].setValue(months);
+      this.form.controls['diasTrabajados'].setValue(days);
+    }
+
 
   }
 
-  getTipoDedicacion(){
+
+  getTipoDedicacion() {
     this.menuService.getTiposDedicacion().subscribe(data => {
       this.tiposDedicacion = data
     });
   }
 
-  getTipoActividades(){
+  getTipoActividades() {
     this.menuService.getTiposActividad().subscribe(data => {
       this.tiposActividad = data
     });
   }
 
-  getTipoEmpresas(){
+  getTipoEmpresas() {
     this.menuService.getTiposEmpresa().subscribe(data => {
       this.tiposEmpresa = data
     });
@@ -150,65 +182,67 @@ export class FormExperienciaLaboralComponent implements OnInit {
     });
   }
 
-  cargar(id:string) {
-   if(id != null){
-    this.experienciaService.getExperienciaById(id)
-      .pipe(
-        catchError(error => {
-          this.snackBar.open(error, null, {
-            duration: 3000
+  cargar(id: string) {
+    if (id != null) {
+      this.experienciaService.getExperienciaById(id)
+        .pipe(
+          catchError(error => {
+            this.snackBar.open(error, null, {
+              duration: 3000
+            });
+            return EMPTY;
+          })
+        )
+        .subscribe(dato => {
+
+
+          this.onSelectPais(dato.idDatoPais);
+          this.onSelectDepartamento(dato.idDatoPais + dato.idDpto);
+          this.onSelectProvincia(dato.idDatoPais + dato.idDpto + dato.idProv);
+
+          this.form = new FormGroup({
+            'rucEmpresa': new FormControl(dato.rucEmpresa),
+            'nombreEmpresa': new FormControl(dato.rasonSocialEmpresa),
+            'tipoEmpresa': new FormControl(dato.idDatoTipoEmpresa),
+            'actividadEmpresa': new FormControl(dato.idTipoActividad),
+            'idDatoPais': new FormControl(dato.idDatoPais),
+            'idDpto': new FormControl(dato.idDpto),
+            'idProv': new FormControl(dato.idProv),
+            'idDist': new FormControl(dato.idDist),
+            'direccion': new FormControl(dato.direccion),
+            'telefono': new FormControl(dato.telefono),
+            'fechaIngreso': new FormControl(dato.fechaIngreso),
+            'fechaRetiro': new FormControl(dato.fechaRetiro),
+            'trabajaActualmente': new FormControl(dato.indTrabajaActualmente),
+            'añosTrabajados': new FormControl(dato.añoTrabajados),
+            'mesesTrabajados': new FormControl(dato.mesesTrabajados),
+            'diasTrabajados': new FormControl(dato.diasTrabajados),
+            'cargo': new FormControl(dato.cargoDesempeñado),
+            'area': new FormControl(dato.area),
+            'dedicacion': new FormControl(dato.idDatoTipoDedicacion),
+            'contrato': new FormControl(dato.idDatoTipoContrato),
+            'retiro': new FormControl(dato.idDatoTipoContrato),
+            'manejoPersonal': new FormControl(dato.indPersonalCargo),
+            'cantidadPersonal': new FormControl(dato.cantidadPersonalCargo),
+            'salario': new FormControl(dato.sueldo),
+            'nombreJefe': new FormControl(dato.nombreJefe),
+            'cargoJefe': new FormControl(dato.cargoJefe),
+            'numeroContacto': new FormControl(dato.numeroContactoJefe),
+            'funciones': new FormControl(dato.funciones),
+            'numeroFolio': new FormControl(dato.numeroFolio)
           });
-          return EMPTY;
+
+
         })
-      )
-      .subscribe(dato => {
-
-
-        this.onSelectPais(dato.idDatoPais);
-        this.onSelectDepartamento(dato.idDatoPais+dato.idDpto);
-        this.onSelectProvincia(dato.idDatoPais+dato.idDpto+dato.idProv);
-
-        this.form = new FormGroup({
-          'rucEmpresa': new FormControl(dato.rucEmpresa),
-          'nombreEmpresa': new FormControl(dato.rasonSocialEmpresa),
-          'tipoEmpresa': new FormControl(dato.idDatoTipoEmpresa),
-          'actividadEmpresa': new FormControl(dato.idTipoActividad),
-          'idDatoPais': new FormControl(dato.idDatoPais),
-          'idDpto': new FormControl(dato.idDpto),
-          'idProv': new FormControl(dato.idProv),
-          'idDist': new FormControl(dato.idDist),
-          'direccion': new FormControl(dato.direccion),
-          'telefono': new FormControl(dato.telefono),
-          'fechaIngreso': new FormControl(dato.fechaIngreso),
-          'fechaRetiro': new FormControl(dato.fechaRetiro),
-          'trabajaActualmente': new FormControl(dato.indTrabajaActualmente),
-          'añosTrabajados': new FormControl(dato.añoTrabajados),
-          'mesesTrabajados': new FormControl(dato.mesesTrabajados),
-          'diasTrabajados': new FormControl(dato.diasTrabajados),
-          'cargo': new FormControl(dato.cargoDesempeñado),
-          'area': new FormControl(dato.area),
-          'dedicacion': new FormControl(dato.idDatoTipoDedicacion),
-          'contrato': new FormControl(dato.idDatoTipoContrato),
-          'retiro': new FormControl(dato.idDatoTipoContrato),
-          'manejoPersonal': new FormControl(dato.indPersonalCargo),
-          'cantidadPersonal': new FormControl(dato.cantidadPersonalCargo),
-          'salario': new FormControl(dato.sueldo),
-          'nombreJefe': new FormControl(dato.nombreJefe),
-          'cargoJefe': new FormControl(dato.cargoJefe),
-          'numeroContacto': new FormControl(dato.numeroContactoJefe),
-          'funciones': new FormControl(dato.funciones),
-          'numeroFolio': new FormControl(dato.numeroFolio)
-        });
-      })
-   }
+    }
 
   }
 
-  getDatosPostulante(){
+  getDatosPostulante() {
     this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
-    .subscribe(data=>{
-      this.postulante = data;
-    })
+      .subscribe(data => {
+        this.postulante = data;
+      })
   }
 
   grabar() {
@@ -216,8 +250,8 @@ export class FormExperienciaLaboralComponent implements OnInit {
     let exp = new ExperienciaLaboral();
 
 
-    console.log('idExp',this.idExperiencia)
-    if(this.idExperiencia!=null){
+    console.log('idExp', this.idExperiencia)
+    if (this.idExperiencia != null) {
       exp.idExperienciaLaboral = this.idExperiencia;
     }
 
@@ -269,17 +303,17 @@ export class FormExperienciaLaboralComponent implements OnInit {
         this.archivo.idCodigoRelacional = result.idEntity
         this.archivo.idProceso = this.idProceso
         this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
-        this.archivo.numeroDocumento= this.postulante.numeroDocumento
+        this.archivo.numeroDocumento = this.postulante.numeroDocumento
         this.upload.uploadFiles(this.archivo);
 
         this.clear();
-        if(this.idExperiencia == null){
+        if (this.idExperiencia == null) {
 
           this.snackBar.open('Se registro los datos de la experiencia laboral', 'Cerrar', {
             duration: 3000
           });
         }
-        else{
+        else {
           this.snackBar.open('Se actualizo los datos de la experiencia laboral', 'Cerrar', {
             duration: 3000
           });
@@ -290,11 +324,11 @@ export class FormExperienciaLaboralComponent implements OnInit {
 
   }
 
-  cancelar(){
+  cancelar() {
     this.router.navigate(['/pages/exp-laboral']);
   }
 
-  clear(){
+  clear() {
     this.form.reset();
   }
 

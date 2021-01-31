@@ -1,4 +1,5 @@
 <div class="container">
+  <h4>Adjuntar documentos</h4>
 <mat-form-field>
   <mat-label>Tipo de documento</mat-label>
   <mat-select [(ngModel)]="idTipoDocumento">
@@ -27,8 +28,11 @@
 <h3 class="title">
  <strong>Imagenes subidas</strong> </h3>
 <mat-list role="list" *ngFor="let s of fileInfos;let i = index">
-  <mat-list-item role="listitem">{{s.idDocumento}} - {{s.nombreArchivo}} <button mat-icon-button color="accent" (click)="descargar(s.pathArchivo,s.nombreArchivo)">
+  <mat-list-item role="listitem">{{s.idDocumento}} - {{s.nombreArchivo}}
+    <button mat-icon-button color="accent" (click)="descargar(s.pathArchivo,s.nombreArchivo)">
     <mat-icon>download</mat-icon></button>
+    <button mat-icon-button color="warn" (click)="eliminarFisico(s.pathArchivo,s.idDatoArchivoPersona)">
+      <mat-icon>delete</mat-icon></button>
   </mat-list-item>
 </mat-list>
 </div>

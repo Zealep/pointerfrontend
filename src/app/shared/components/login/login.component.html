@@ -1,40 +1,47 @@
 <mat-card>
-  <mat-card-title>Iniciar sesión</mat-card-title>
+  <div>
+    <img src="./assets/images/logocliente.png" width="100" height="60" />
+  </div>
+  <mat-card-title>
+    <div class="title">
+      <div>
+        <img src="./assets/images/pointererp2.png" width="150" height="80" />
+      </div>
+      <div>Iniciar sesión</div>
+    </div>
+  </mat-card-title>
   <mat-card-content>
     <form [formGroup]="form">
-        <mat-form-field appearance="outline">
-          <input type="text" matInput placeholder="Correo" formControlName="correo">
-          <mat-error *ngIf="form.get('correo').invalid &&
+      <mat-form-field appearance="outline">
+        <input type="text" matInput placeholder="Correo" formControlName="correo">
+        <mat-error *ngIf="form.get('correo').invalid &&
                             (form.get('correo').dirty || form.get('correo').touched)">
-            Ingrese su correo
-          </mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="outline">
-          <input type="password" matInput placeholder="Contraseña" formControlName="contraseña">
-          <mat-error *ngIf="form.get('contraseña').invalid &&
+          Ingrese su correo
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <input type="password" matInput placeholder="Contraseña" formControlName="contraseña">
+        <mat-error *ngIf="form.get('contraseña').invalid &&
                             (form.get('contraseña').dirty || form.get('contraseña').touched)">
-            Ingrese su contraseña
-          </mat-error>
-        </mat-form-field>
-        <div class="pass">
-          <button  mat-button color="primary" [routerLink]="'/restore-pass'">
-            ¿Olvidaste tu contraseña?
-          </button>
-        </div>
+          Ingrese su contraseña
+        </mat-error>
+      </mat-form-field>
+      <div class="pass">
+        <button mat-button color="primary" [routerLink]="'/restore-pass'">
+          ¿Olvidaste tu contraseña?
+        </button>
+      </div>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary"
-            [disabled]="form.invalid"
-            (click)="submit()">
+    <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="submit()">
       Entrar
     </button>
   </mat-card-actions>
   <mat-card-footer>
-  <button mat-button [routerLink]="'/alta'">
-        Crear cuenta
+    <button mat-button [routerLink]="'/alta'">
+      Crear cuenta
     </button>
   </mat-card-footer>
 </mat-card>
-

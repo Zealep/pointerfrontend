@@ -29,6 +29,7 @@ export class UploadFileService {
     return this.http.get<DatoArchivo[]>(`${this.baseUrl}/getByCodigoRelacional/${id}/${proceso}`);
   }
 
+
   download(path: string): Observable<Blob> {
     let parms = new HttpParams();
     parms = parms.append('url',path);
@@ -37,6 +38,17 @@ export class UploadFileService {
         params:parms,
         responseType: 'blob'
     });
+  }
+
+  deleteFile(path: string,id:string) {
+    let parms = new HttpParams();
+    parms = parms.append('url',path);
+    parms = parms.append('id',id);
+    return this.http.get<ResponseApi>(`${this.baseUrl}/deleteFile`,
+    {
+      params:parms
+    }
+  );
   }
 
 

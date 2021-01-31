@@ -40,7 +40,9 @@ export class LoginComponent implements OnInit {
       catchError(response => {
         console.log('error captcheado login',response);
       this.snackBar.open(response, 'Cerrar', {
-        duration: 3000
+        duration: 3000,
+        horizontalPosition: 'center',
+       verticalPosition: 'top'
       });
       // catch & replace
       return EMPTY;

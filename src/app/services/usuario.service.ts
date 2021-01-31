@@ -78,7 +78,7 @@ export class UsuarioService {
       console.log('Error:', error.error);
     }
     //catch and rethrow
-    return throwError(error.error.message);
+    return throwError('Usuario o clave incorrecta');
 
   }
 }

@@ -78,6 +78,14 @@ export class UploadFilesComponent implements OnInit {
       this.cargarArchivos.splice(index,1);
   }
 
+  eliminarFisico(path:string,id:string){
+    this.uploadService.deleteFile(path,id).subscribe
+    (X=>{
+      this.getFiles();
+      console.log('archivo borrado');
+    })
+  }
+
   uploadFiles(archivo:DatoArchivo) {
     console.log('archivo ',archivo.idCodigoRelacional)
 

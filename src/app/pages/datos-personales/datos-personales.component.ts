@@ -448,8 +448,9 @@ agregarDiscapacidad(){
 
         this.snackBar.open('Los datos personales del postulante fueron actualizados', 'Cerrar', {
           duration: 3000
-        });
 
+        });
+        this.router.navigate(['/pages/datos-personales']);
 
       });
 

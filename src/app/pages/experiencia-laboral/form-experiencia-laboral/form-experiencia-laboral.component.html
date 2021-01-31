@@ -81,14 +81,14 @@
 
         <mat-form-field appearance="outline" fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Fecha de ingreso</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fechaIngreso">
+          <input matInput [matDatepicker]="picker" formControlName="fechaIngreso" (dateChange)="calcularTiempo($event)" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="calc(50%-40px)" appearance="outline">
+        <mat-form-field appearance="outline" fxFlex="calc(50%-40px)" appearance="outline" >
           <mat-label>Fecha de retiro</mat-label>
-          <input matInput [matDatepicker]="picker2" formControlName="fechaRetiro">
+          <input matInput [matDatepicker]="picker2" formControlName="fechaRetiro" (dateChange)="calcularTiempo($event)" required>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
@@ -100,19 +100,19 @@
             <mat-radio-button value="N">No</mat-radio-button>
           </mat-radio-group>
         </div>
-        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline"  >
           <mat-label>Años trabajo</mat-label>
-          <input type="number" matInput formControlName="añosTrabajados">
+          <input type="number" matInput formControlName="añosTrabajados" required readonly>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline" >
           <mat-label>Meses trabajo</mat-label>
-          <input type="number" matInput formControlName="mesesTrabajados">
+          <input type="number" matInput formControlName="mesesTrabajados" required readonly>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline" >
           <mat-label>Dias trabajo</mat-label>
-          <input type="number" matInput formControlName="diasTrabajados">
+          <input type="number" matInput formControlName="diasTrabajados" required readonly>
         </mat-form-field>
 
         <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
