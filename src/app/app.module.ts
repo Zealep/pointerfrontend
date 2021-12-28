@@ -33,6 +33,8 @@ registerLocaleData(es);
   providers: [GuardService,{
     provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     { provide: LOCALE_ID, useValue: "es-ES"},
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+
     JwtHelperService],
   bootstrap: [AppComponent]
 })
