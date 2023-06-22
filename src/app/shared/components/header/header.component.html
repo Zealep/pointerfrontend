@@ -1,26 +1,25 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
 
-    <div>
-      <a [routerLink]="'/pages/datos-personales'">
-        <img src="./assets/images/pointererp.png" width="150" height="80" />
-      </a>
-    </div>
-    <span class="menu-spacer"></span>
-    <div class="buttons">
-      <button mat-button *ngFor="let m of menus" [routerLink]="'/pages'+m.urlOperacion">
-        {{m.nombreMenuWeb}}
-      </button>
-    </div>
-    <div>
-      <button mat-button (click)="cerrarSesion()">
-        <mat-icon>logout</mat-icon>
-      </button>
-    </div>
-    <span class="logo-spacer"></span>
-    <div>
-      <img src="./assets/images/logocliente.png" width="150" height="80" />
-    </div>
+  <div class="overflow-auto">
+    <a [routerLink]="'/pages/datos-personales'">
+      <img src="./assets/images/pointererp.png" width="150" height="80" />
+    </a>
+  </div>
 
-  </mat-toolbar-row>
+  <span class="menu-spacer"></span>
+  <div class="buttons">
+    <button mat-button *ngFor="let m of menus" [routerLink]="'/pages'+m.urlOperacion">
+      {{m.nombreMenuWeb}}
+    </button>
+  </div>
+  <div>
+    <button mat-button (click)="cerrarSesion()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+  <span class="logo-spacer"></span>
+  <div>
+    <img src="./assets/images/logocliente.png" width="150" height="80" />
+  </div>
+
 </mat-toolbar>
