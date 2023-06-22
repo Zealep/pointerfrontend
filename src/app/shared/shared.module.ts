@@ -9,11 +9,12 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { AltaUserComponent } from './components/login/alta-user/alta-user.component';
 import { RestorePassComponent } from './components/login/restore-pass/restore-pass.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
+import { OportunidadLaboralComponent } from './components/oportunidad-laboral/oportunidad-laboral.component';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, HeaderComponent, ConfirmDialogComponent, AltaUserComponent, RestorePassComponent, UploadFilesComponent],
+  declarations: [LoginComponent, HeaderComponent, ConfirmDialogComponent, AltaUserComponent, RestorePassComponent, UploadFilesComponent, OportunidadLaboralComponent],
   imports: [
     CommonModule,
     MaterialModule,

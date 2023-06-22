@@ -14,6 +14,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ExperienciaLaboralComponent } from './experiencia-laboral/experiencia-laboral.component';
 import { EstudioFormalComponent } from './estudio-formal/estudio-formal.component';
+import { PuestosDisponiblesComponent } from './puestos-disponibles/puestos-disponibles.component';
 
 
 const routes: Routes = [
@@ -29,58 +30,63 @@ const routes: Routes = [
       {
         path: 'datos-personales',
         component: DatosPersonalesComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'exp-laboral',
         component: ExperienciaLaboralComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'exp-laboral/form',
         component: FormExperienciaLaboralComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'edu-formal',
         component: EstudioFormalComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'edu-formal/form',
         component: FormEstudioFormalComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'edu-noformal',
         component: EstudioNoformalComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'edu-noformal/form',
         component: FormEstudioNoFormalComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'idiomas',
         component: IdiomaComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'idiomas/form',
         component: FormIdiomaComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'familiares',
         component: FamiliaComponent,
-        canActivate:[GuardService]
+        canActivate: [GuardService]
       },
       {
         path: 'familiares/form',
         component: FormFamiliaComponent,
-        canActivate:[GuardService]
-      }
+        canActivate: [GuardService]
+      },
+      {
+        path: 'puestos',
+        component: PuestosDisponiblesComponent,
+        canActivate: [GuardService]
+      },
 
 
 

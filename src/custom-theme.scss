@@ -1,0 +1,122 @@
+
+@import '~@angular/material/theming';
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Poppins',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+
+@include mat-core($custom-typography);
+
+$md-mprimary: (
+    50 : #e4edf3,
+    100 : #bbd2e0,
+    200 : #8eb4cc,
+    300 : #6196b7,
+    400 : #3f80a7,
+    500 : #1d6998,
+    600 : #1a6190,
+    700 : #155685,
+    800 : #114c7b,
+    900 : #0a3b6a,
+    A100 : #9cc9ff,
+    A200 : #69aeff,
+    A400 : #3692ff,
+    A700 : #1c84ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
+$md-maccent: (
+    50 : #e2f6fb,
+    100 : #b6e9f5,
+    200 : #86daee,
+    300 : #56cbe7,
+    400 : #31bfe2,
+    500 : #0db4dd,
+    600 : #0badd9,
+    700 : #09a4d4,
+    800 : #079ccf,
+    900 : #038cc7,
+    A100 : #effaff,
+    A200 : #bce8ff,
+    A400 : #89d7ff,
+    A700 : #6fcfff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+// Include non-theme styles for core.
+@include mat-core();
+
+// Define your application's custom theme.
+$primary: mat-palette($md-mprimary);
+$accent:  mat-palette($md-maccent, A700,700);
+$theme: mat-light-theme($primary, $accent);
+
+// Include theme styles for Angular Material components.
+@include angular-material-theme($theme);
+
+
+
+
+.error-style{
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.error-style button {
+  background-color: #a94442;
+  color: white !important;
+  border: none;
+}
+
+.ok-style{
+  color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.ok-style button{
+  background-color: #3c763d;
+  color: white !important;
+  border: none;
+}
+
+
+.warn-style{
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}

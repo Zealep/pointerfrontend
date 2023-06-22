@@ -3,12 +3,17 @@ import { AltaUserComponent } from './shared/components/login/alta-user/alta-user
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './shared/components/login/login.component';
+import { OportunidadLaboralComponent } from './shared/components/oportunidad-laboral/oportunidad-laboral.component';
 
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'oportunidad',
+    component: OportunidadLaboralComponent
   },
   {
     path: 'alta',
