@@ -9,44 +9,32 @@ import { ResponseApi } from '../models/response-api';
 import { RequisicionPersonal } from '../models/requisicion-personal';
 import { BandejaRequisicionRequestIn } from '../models/dto/bandeja-requisicion-in';
 import { BandejaRequisicion } from '../models/dto/bandeja-requisicion';
-import { RequisicionPersonalPostulante } from '../models/requisicion-personal-postulante';
+import { RequisicionPersonalPregunta } from '../models/requisicion-personal-pregunta';
+import { PostulanteRespuesta } from '../models/postulante-respuesta';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RequisicionPersonalService {
+export class RequisicionPersonalPreguntaService {
 
-  private baseUrl: string = `${HOST}/requisicion`;
+  private baseUrl: string = `${HOST}/requisicion-pregunta`;
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
 
-
-  bandeja(r: BandejaRequisicionRequestIn) {
-    return this.http.post<BandejaRequisicion[]>(`${this.baseUrl}/bandeja`, r
-    )
-      .pipe(
-        catchError(this.handleError));
-  }
-
-  getList() {
-    return this.http.get<RequisicionPersonal[]>(`${this.baseUrl}/list`);
-  }
-
-  getBydId(id: string) {
-    return this.http.get<RequisicionPersonal>(`${this.baseUrl}/find/${id}`)
+  getBydIdRequisicion(id: string) {
+    return this.http.get<RequisicionPersonalPregunta[]>(`${this.baseUrl}/idRequisicion/${id}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-
-  savePostulante(r: RequisicionPersonalPostulante) {
-    return this.http.post<BandejaRequisicion[]>(`${this.baseUrl}/save/postulante`, r
-    )
+  saveRespuestas(respuestas: PostulanteRespuesta[]) {
+    return this.http.post<ResponseApi>(`${this.baseUrl}/saveRespuestas`, respuestas)
       .pipe(
-        catchError(this.handleError));
+        catchError(this.handleError)
+      );
   }
 
 

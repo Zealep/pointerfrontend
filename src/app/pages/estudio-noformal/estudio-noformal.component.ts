@@ -19,67 +19,67 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class EstudioNoformalComponent implements OnInit {
 
   estudios: EstudioNoFormalDTO[] = [];
-  displayedColumns:string[] = ['nombre','institucion','fechaInicio','fechaFin','acciones'];
+  displayedColumns: string[] = ['nombre', 'institucion', 'fechaInicio', 'fechaFin', 'acciones'];
   dataSource: MatTableDataSource<EstudioNoFormalDTO>;
   idUserWeb: string;
 
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private estudioService: EstudioNoFormalService,
     private snackBar: MatSnackBar,
-    public route: ActivatedRoute ,
+    public route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog) { }
 
-    ngOnInit(): void {
-      this.idUserWeb = sessionStorage.getItem('ID-USER');
-      this.load();
-     }
-
-      applyFilter(event: Event) {
-       const filterValue = (event.target as HTMLInputElement).value;
-       this.dataSource.filter = filterValue.trim().toLowerCase();
-     }
-
-     delete(exp: EstudioNoFormal) {
-       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-         maxWidth: '600px',
-         data: <ConfirmDialogModel>{
-           title: 'Eliminar estudio no formal',
-           message: 'Deseas borrar el estudio no formal?'
-         }
-       });
-
-       dialogRef.afterClosed()
-         .subscribe(result => {
-           if(result) {
-             this.sendDeleteRequest(exp);
-           }
-         });
-     }
-
-     private load(){
-       this.estudioService.getNoFormalesDTOByPostulante(this.idUserWeb).subscribe(data => {
-         let estudios = JSON.parse(JSON.stringify(data));
-         this.dataSource = new MatTableDataSource(estudios);
-         this.dataSource.paginator = this.paginator;
-         this.dataSource.sort = this.sort;
-       });
-     }
-
-     private sendDeleteRequest(exp: EstudioNoFormal) {
-       this.estudioService.delete(exp.idEstudioNoFormal)
-       .subscribe(response => {
-         this.load();
-         this.snackBar.open('Estudio no formal eliminado', 'Close', {
-           duration: 300
-         });
-       });
-     }
-
-     callEdit(id: number){
-      this.router.navigate(['/pages/edu-noformal/form',{exp:id}]);
-    }
+  ngOnInit(): void {
+    this.idUserWeb = sessionStorage.getItem('usuario');
+    this.load();
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  delete(exp: EstudioNoFormal) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '600px',
+      data: <ConfirmDialogModel>{
+        title: 'Eliminar estudio no formal',
+        message: 'Deseas borrar el estudio no formal?'
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.sendDeleteRequest(exp);
+        }
+      });
+  }
+
+  private load() {
+    this.estudioService.getNoFormalesDTOByPostulante(this.idUserWeb).subscribe(data => {
+      let estudios = JSON.parse(JSON.stringify(data));
+      this.dataSource = new MatTableDataSource(estudios);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  private sendDeleteRequest(exp: EstudioNoFormal) {
+    this.estudioService.delete(exp.idEstudioNoFormal)
+      .subscribe(response => {
+        this.load();
+        this.snackBar.open('Estudio no formal eliminado', 'Close', {
+          duration: 300
+        });
+      });
+  }
+
+  callEdit(id: number) {
+    this.router.navigate(['/pages/edu-noformal/form', { exp: id }]);
+  }
+}

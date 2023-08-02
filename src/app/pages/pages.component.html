@@ -1,6 +1,29 @@
-<app-header></app-header>
-<div>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary">
+    <button mat-icon-button color="primary" (click)="snav.toggle()">
+      <mat-icon class="icon-menu">menu</mat-icon>
+    </button>
+    <img src="./assets/images/pointererp.png" width="150" height="80" />
+    <span class="toolbar-item-spacer"></span>
+    <button color="primary" mat-icon-button (click)="cerrarSesion()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav opened="true" [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+        <mat-list-item class="custom-list-item" *ngFor="let m of menus" [routerLink]="'/pages'+m.urlOperacion">
+          <span> {{m.nombreMenuWeb}}</span>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

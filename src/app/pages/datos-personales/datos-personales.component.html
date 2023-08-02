@@ -1,6 +1,9 @@
 <mat-card>
   <mat-card-header>
-    Datos personales del postulante
+    <mat-card-title>
+      Datos personales del postulante
+    </mat-card-title>
+
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form">
@@ -71,7 +74,8 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Departamento Nacimiento</mat-label>
-          <mat-select formControlName="idDptoNacimiento" (ngModelChange)="onSelectDepartamentoNacimiento($event)" required>
+          <mat-select formControlName="idDptoNacimiento" (ngModelChange)="onSelectDepartamentoNacimiento($event)"
+            required>
             <mat-option *ngFor="let s of departamentoNacimiento" [value]="s.cod">
               {{s.des}}
             </mat-option>
@@ -107,7 +111,8 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Departamento Residencia</mat-label>
-          <mat-select formControlName="idDptoResidencia" (ngModelChange)="onSelectDepartamentoResidencia($event)" required>
+          <mat-select formControlName="idDptoResidencia" (ngModelChange)="onSelectDepartamentoResidencia($event)"
+            required>
             <mat-option *ngFor="let s of departamentoResidencia" [value]="s.cod">
               {{s.des}}
             </mat-option>
@@ -187,178 +192,179 @@
           <input matInput formControlName="telefonoMovil" type="number">
         </mat-form-field>
 
-          <mat-label>Acepta uso de datos personales?</mat-label>
-          <mat-radio-group formControlName="indAceptoDatosPersonales">
-            <mat-radio-button value="S">Si</mat-radio-button>
-            <mat-radio-button value="N">No</mat-radio-button>
-          </mat-radio-group>
+        <mat-label>Acepta uso de datos personales?</mat-label>
+        <mat-radio-group formControlName="indAceptoDatosPersonales">
+          <mat-radio-button value="S">Si</mat-radio-button>
+          <mat-radio-button value="N">No</mat-radio-button>
+        </mat-radio-group>
 
-          <mat-label>Acepta viajar al exterior?</mat-label>
-          <mat-radio-group formControlName="indDispViajarInterior">
-            <mat-radio-button value="S">Si</mat-radio-button>
-            <mat-radio-button value="N">No</mat-radio-button>
-          </mat-radio-group>
-
-
-          <mat-label>Acepta viajar al interior?</mat-label>
-          <mat-radio-group formControlName="indDispViajarExterior">
-            <mat-radio-button value="S">Si</mat-radio-button>
-            <mat-radio-button value="N">No</mat-radio-button>
-          </mat-radio-group>
+        <mat-label>Acepta viajar al exterior?</mat-label>
+        <mat-radio-group formControlName="indDispViajarInterior">
+          <mat-radio-button value="S">Si</mat-radio-button>
+          <mat-radio-button value="N">No</mat-radio-button>
+        </mat-radio-group>
 
 
-          <mat-label>Tiene disponibilidad inmediata?</mat-label>
-          <mat-radio-group formControlName="indDispInmediata">
-            <mat-radio-button value="S">Si</mat-radio-button>
-            <mat-radio-button value="N">No</mat-radio-button>
-          </mat-radio-group>
-
-          <mat-form-field appearance="outline" *ngIf="form.value.indDispInmediata == 'N'">
-            <mat-label>Timpo de disponibilidad</mat-label>
-            <input matInput formControlName="tiempoDisponibilidad">
-          </mat-form-field>
+        <mat-label>Acepta viajar al interior?</mat-label>
+        <mat-radio-group formControlName="indDispViajarExterior">
+          <mat-radio-button value="S">Si</mat-radio-button>
+          <mat-radio-button value="N">No</mat-radio-button>
+        </mat-radio-group>
 
 
-          <mat-form-field appearance="outline">
-            <mat-label>Cargo</mat-label>
-            <mat-select formControlName="idCargo">
-              <mat-option *ngFor="let s of cargo" [value]="s.cod">
-                {{s.des}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <mat-label>Tiene disponibilidad inmediata?</mat-label>
+        <mat-radio-group formControlName="indDispInmediata">
+          <mat-radio-button value="S">Si</mat-radio-button>
+          <mat-radio-button value="N">No</mat-radio-button>
+        </mat-radio-group>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Expectativa Salarial</mat-label>
-            <input matInput formControlName="expectativaSalarial" type="number">
-          </mat-form-field>
+        <mat-form-field appearance="outline" *ngIf="form.value.indDispInmediata == 'N'">
+          <mat-label>Timpo de disponibilidad</mat-label>
+          <input matInput formControlName="tiempoDisponibilidad">
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Motivo que se entero</mat-label>
-            <mat-select formControlName="idMedioInformativo">
-              <mat-option *ngFor="let s of motivoEntero" [value]="s.cod">
-                {{s.des}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Numero de conadis</mat-label>
-            <input matInput formControlName="numeroConadis">
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Areas de interes</mat-label>
-            <mat-select (selectionChange)="select($event.value)">
-              <mat-option *ngFor="let a of areas" [value]="a.cod">{{a.des}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div *ngIf="areasPostulante != null && areasPostulante.length > 0"
-            class="table-container">
-            <table mat-table [dataSource]="dataAreas" class="mat-elevation-z8">
-
-              <ng-container matColumnDef="nombre">
-                <th mat-header-cell *matHeaderCellDef> Area </th>
-                <td mat-cell *matCellDef="let detail;">{{detail.area}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="acciones">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let detail;let idx=index;">
-                  <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon" (click)="borrarArea(detail.idPostulanteAreas)">
-                    <i class="material-icons">
-                      delete
-                      </i>
-                  </button>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-          </div>
-
-          <mat-label>Tiene discapacidad?</mat-label>
-          <mat-radio-group formControlName="indTieneDiscapacidad">
-            <mat-radio-button value="S">Si</mat-radio-button>
-            <mat-radio-button value="N">No</mat-radio-button>
-          </mat-radio-group>
-
-      <div *ngIf="form.value.indTieneDiscapacidad == 'S'">
 
         <mat-form-field appearance="outline">
-          <mat-label>Tipo de discapacidad</mat-label>
-          <mat-select [(ngModel)]="tipoDiscapacidad" [ngModelOptions]="{standalone: true}">
-            <mat-option *ngFor="let a of discapacidades" [value]="a.cod">{{a.des}}</mat-option>
+          <mat-label>Cargo</mat-label>
+          <mat-select formControlName="idCargo">
+            <mat-option *ngFor="let s of cargo" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>% de discapacidad</mat-label>
-          <input matInput type="number" [(ngModel)]="porcentageDiscapacidad" [ngModelOptions]="{standalone: true}" >
+          <mat-label>Expectativa Salarial</mat-label>
+          <input matInput formControlName="expectativaSalarial" type="number">
         </mat-form-field>
 
-        <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon" (click)="agregarDiscapacidad()">
-          <i class="material-icons">
-            add
-            </i>
-        </button>
+        <mat-form-field appearance="outline">
+          <mat-label>Motivo que se entero</mat-label>
+          <mat-select formControlName="idMedioInformativo">
+            <mat-option *ngFor="let s of motivoEntero" [value]="s.cod">
+              {{s.des}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>Numero de conadis</mat-label>
+          <input matInput formControlName="numeroConadis">
+        </mat-form-field>
 
-        <div *ngIf="discapacidadPostulante != null && discapacidadPostulante.length > 0"
-          class="table-container">
-          <table mat-table [dataSource]="dataDiscapacidad" class="mat-elevation-z8">
+        <mat-form-field appearance="outline">
+          <mat-label>Areas de interes</mat-label>
+          <mat-select (selectionChange)="select($event.value)">
+            <mat-option *ngFor="let a of areas" [value]="a.cod">{{a.des}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-            <ng-container matColumnDef="discapacidad">
-              <th mat-header-cell *matHeaderCellDef> Discapacidad </th>
-              <td mat-cell *matCellDef="let detail;">{{detail.tipoDiscapacidad}} </td>
+        <div *ngIf="areasPostulante != null && areasPostulante.length > 0" class="table-container">
+          <table mat-table [dataSource]="dataAreas" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef> Area </th>
+              <td mat-cell *matCellDef="let detail;">{{detail.area}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="porcentaje">
-              <th mat-header-cell *matHeaderCellDef> Porcentaje  </th>
-              <td mat-cell *matCellDef="let detail;">{{detail.porcentajeDiscapacidad}} %</td>
-            </ng-container>
-
-            <ng-container matColumnDef="accionesDisca">
+            <ng-container matColumnDef="acciones">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let detail;let idx=index;">
-                <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon" (click)="borrarDiscapacidad(detail.idDiscapacidadPostulante)">
+                <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon"
+                  (click)="borrarArea(detail.idPostulanteAreas)">
                   <i class="material-icons">
                     delete
-                    </i>
+                  </i>
                 </button>
               </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsDisca"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsDisca;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
 
+        <mat-label>Tiene discapacidad?</mat-label>
+        <mat-radio-group formControlName="indTieneDiscapacidad">
+          <mat-radio-button value="S">Si</mat-radio-button>
+          <mat-radio-button value="N">No</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="form.value.indTieneDiscapacidad == 'S'">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de discapacidad</mat-label>
+            <mat-select [(ngModel)]="tipoDiscapacidad" [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let a of discapacidades" [value]="a.cod">{{a.des}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>% de discapacidad</mat-label>
+            <input matInput type="number" [(ngModel)]="porcentageDiscapacidad" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon"
+            (click)="agregarDiscapacidad()">
+            <i class="material-icons">
+              add
+            </i>
+          </button>
+
+
+          <div *ngIf="discapacidadPostulante != null && discapacidadPostulante.length > 0" class="table-container">
+            <table mat-table [dataSource]="dataDiscapacidad" class="mat-elevation-z8">
+
+              <ng-container matColumnDef="discapacidad">
+                <th mat-header-cell *matHeaderCellDef> Discapacidad </th>
+                <td mat-cell *matCellDef="let detail;">{{detail.tipoDiscapacidad}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="porcentaje">
+                <th mat-header-cell *matHeaderCellDef> Porcentaje </th>
+                <td mat-cell *matCellDef="let detail;">{{detail.porcentajeDiscapacidad}} %</td>
+              </ng-container>
+
+              <ng-container matColumnDef="accionesDisca">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let detail;let idx=index;">
+                  <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon"
+                    (click)="borrarDiscapacidad(detail.idDiscapacidadPostulante)">
+                    <i class="material-icons">
+                      delete
+                    </i>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsDisca"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsDisca;"></tr>
+            </table>
+          </div>
 
 
 
-      </div>
+
+        </div>
 
 
-<div class="upload">
-  <app-upload-files [id]="this.idUserWeb" [idProceso]="this.idProceso">
-  </app-upload-files>
-</div>
+        <div class="upload">
+          <app-upload-files [id]="this.idUserWeb" [idProceso]="this.idProceso">
+          </app-upload-files>
+        </div>
 
       </div>
     </form>
   </mat-card-content>
   <mat-card-actions>
     <div fxLayout="row wrap" fxLayoutGap="40px">
-    <button fxFlex="calc(50%-40px)" mat-raised-button color="primary" (click)="grabar()">
-      Registrar
-    </button>
+      <button fxFlex="calc(50%-40px)" mat-raised-button color="primary" (click)="grabar()">
+        Registrar
+      </button>
 
-    <button fxFlex="calc(50%-40px)" mat-raised-button color="accent" (click)="cancelar()">
-      Cancelar
-    </button>
+      <button fxFlex="calc(50%-40px)" mat-raised-button color="accent" (click)="cancelar()">
+        Cancelar
+      </button>
     </div>
 
   </mat-card-actions>

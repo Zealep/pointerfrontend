@@ -7,6 +7,9 @@ import { BandejaRequisicion } from 'src/app/models/dto/bandeja-requisicion';
 import { BandejaRequisicionRequestIn } from 'src/app/models/dto/bandeja-requisicion-in';
 import { Requisicion } from 'src/app/models/requisicion';
 import { RequisicionPersonalService } from 'src/app/services/requisicion-personal.service';
+import { element } from 'protractor';
+import { MatDialog } from '@angular/material/dialog';
+import { VerDetalleEmpleoComponent } from './ver-detalle-empleo/ver-detalle-empleo.component';
 
 @Component({
   selector: 'app-oportunidad-laboral',
@@ -15,7 +18,7 @@ import { RequisicionPersonalService } from 'src/app/services/requisicion-persona
 })
 export class OportunidadLaboralComponent implements OnInit {
 
-  displayedColumns: string[] = ['puesto', 'lugarTrabajo', 'modalidad', 'areaSolicitante'];
+  displayedColumns: string[] = ['puesto', 'acciones'];
   dataSource!: MatTableDataSource<BandejaRequisicion>;
   requisiciones: BandejaRequisicion[] = [];
 
@@ -23,7 +26,8 @@ export class OportunidadLaboralComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private requisicionPersonalService: RequisicionPersonalService,
-    private router: Router) { }
+    private router: Router,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getRequisiciones();
@@ -40,7 +44,20 @@ export class OportunidadLaboralComponent implements OnInit {
       })
   }
 
+  ver(e: BandejaRequisicion) {
+    const dialogRef = this.dialog.open(VerDetalleEmpleoComponent, {
+      maxWidth: '800px',
+      data: e
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+
+      });
+  }
+
   postular() {
     this.router.navigate(['/login']);
   }
+
 }

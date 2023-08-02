@@ -27,7 +27,7 @@ export class FormIdiomaComponent implements OnInit {
   idProceso = '00029';
   archivo = new DatoArchivo();
   postulante: DatosPersonal;
-  @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
+  @ViewChild(UploadFilesComponent) upload: UploadFilesComponent
 
 
   form: FormGroup = new FormGroup({
@@ -49,7 +49,7 @@ export class FormIdiomaComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.idIdioma = this.route.snapshot.paramMap.get('exp'))
-    this.idUserWeb = sessionStorage.getItem('ID-USER');
+    this.idUserWeb = sessionStorage.getItem('usuario');
     this.idIdioma = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idIdioma);
     this.getDatosPostulante();
@@ -58,14 +58,14 @@ export class FormIdiomaComponent implements OnInit {
 
   }
 
-  getDatosPostulante(){
+  getDatosPostulante() {
     this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
-    .subscribe(data=>{
-      this.postulante = data;
-    })
+      .subscribe(data => {
+        this.postulante = data;
+      })
   }
 
-  getTiposNiveles(){
+  getTiposNiveles() {
     this.menuService.getNiveles().subscribe(data => {
       this.tiposNivel = data
     });
@@ -133,7 +133,7 @@ export class FormIdiomaComponent implements OnInit {
         this.archivo.idCodigoRelacional = result.idEntity
         this.archivo.idProceso = this.idProceso
         this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
-        this.archivo.numeroDocumento= this.postulante.numeroDocumento
+        this.archivo.numeroDocumento = this.postulante.numeroDocumento
         this.upload.uploadFiles(this.archivo);
         if (this.idIdioma == null) {
           this.snackBar.open('Se registro los datos del idioma', 'Cerrar', {

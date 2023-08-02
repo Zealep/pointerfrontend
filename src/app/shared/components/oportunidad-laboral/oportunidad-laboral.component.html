@@ -9,43 +9,22 @@
 
       <ng-container matColumnDef="puesto">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Puesto</th>
-        <td mat-cell *matCellDef="let row">{{row.glsCargo}}
+        <td mat-cell *matCellDef="let row"><b>{{row.glsCargo}}</b><br>
+          <small>{{row.idDist}} , {{row.idAreaSolicitante}}</small>
         </td>
       </ng-container>
-
-      <ng-container matColumnDef="lugarTrabajo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lugar Trabajo </th>
-        <td mat-cell *matCellDef="let row"> {{row.idDist}}</td>
-      </ng-container>
-
-
-      <ng-container matColumnDef="modalidad">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Modalidad </th>
-        <td mat-cell *matCellDef="let row">{{row.idModalidadTrabajo}}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="areaSolicitante">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Area Solicitante </th>
-        <td mat-cell *matCellDef="let row"> {{row.idAreaSolicitante}} </td>
-      </ng-container>
-
-
-
-
-      <!--
 
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let element">
 
-          <button mat-icon-button color="accent" (click)="inscribirse(element)">
-            <mat-icon>edit_square</mat-icon>Inscribirse
+          <button mat-icon-button color="accent" (click)="ver(element)">
+            <mat-icon>visibility</mat-icon>
           </button>
 
         </td>
       </ng-container>
--->
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 

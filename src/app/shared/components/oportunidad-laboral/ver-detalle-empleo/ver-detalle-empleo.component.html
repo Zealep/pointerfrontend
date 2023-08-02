@@ -1,0 +1,30 @@
+<div class="container">
+  <h2>Requisitos: </h2>
+  <div [innerHTML]="requisicionPersonal?.detalleRequisitosHtml">
+  </div>
+  <h2>Funciones: </h2>
+  <div [innerHTML]="requisicionPersonal?.detalleFuncionesHtml">
+  </div>
+  <h2>Beneficios: </h2>
+  <div [innerHTML]="requisicionPersonal?.detalleBeneficiosHtml">
+  </div>
+  <h2>Lugar de trabajo:</h2>
+  <p>
+    {{bandeja.idDist}}
+  </p>
+  <h2>Area de trabajo:</h2>
+  {{bandeja.idAreaSolicitante}}
+  <div *ngIf="requisicionPersonal?.indVisualizarSueldo == 'S'">
+    <h2>Sueldo: </h2>
+    <p>{{requisicionPersonal.sueldoPropuesto}}</p>
+  </div>
+  <h2>Modalidad: </h2>
+  <p>{{bandeja.idModalidadTrabajo}}</p>
+
+
+  <a class="link-opacity-100" (click)="descargarPdf(requisicionPersonal)">
+    Documento de especificiacion
+  </a>
+
+
+</div>

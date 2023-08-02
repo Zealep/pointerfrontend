@@ -64,7 +64,7 @@ export class FormFamiliaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.idUserWeb = sessionStorage.getItem('ID-USER');
+    this.idUserWeb = sessionStorage.getItem('usuario');
     this.idFamilia = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idFamilia);
     this.getPais();
@@ -75,7 +75,7 @@ export class FormFamiliaComponent implements OnInit {
     this.getGradosIntruccion();
   }
 
-  getGradosIntruccion(){
+  getGradosIntruccion() {
     this.datosSevice.getGradoIntruccion().subscribe(data => {
       this.tiposInstruccion = data
     });

@@ -5,5 +5,5 @@ export const TOKEN_NAME = 'access_token';
 export const TOKEN_AUTH_USERNAME = 'zealep';
 export const TOKEN_AUTH_PASSWORD = 'zealepxs124';
 export const ID_EMPRESA = '01';
-
+export const PROCESO_REQUISICION = '00032';
 

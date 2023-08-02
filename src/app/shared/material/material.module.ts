@@ -9,25 +9,26 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule, MatPaginatorIntl} from '@angular/material/paginator';
-import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatMomentDateModule,MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
 import { getSpanishPaginatorIntl } from './spanish-paginator-intl';
-import {MatSelectModule} from '@angular/material/select';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatStepperModule} from '@angular/material/stepper';
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
-import {NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
-import {NgxMatTimepickerModule}  from '@angular-material-components/datetime-picker';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatStepperModule } from '@angular/material/stepper';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -62,7 +63,8 @@ import {MatRadioModule} from '@angular/material/radio';
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
-    MatRadioModule
+    MatRadioModule,
+    MatProgressSpinnerModule
 
   ],
   exports: [
@@ -91,12 +93,13 @@ import {MatRadioModule} from '@angular/material/radio';
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
-    MatRadioModule
+    MatRadioModule,
+    MatProgressSpinnerModule
   ],
- providers: [
-    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {strict: true}},
-    {provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
-    {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { strict: true } },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
   ]
 })
 export class MaterialModule {

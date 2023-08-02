@@ -1,7 +1,7 @@
-export class DatoArchivo{
-  idDatoArchivoPersona: string;
+export class DatoArchivo {
+  idDatoArchivo: string;
   idEmpresa: string;
-  idTipoDocumentoIdentidad:string;
+  idTipoDocumentoIdentidad: string;
   numeroDocumento: string;
   idCodigoRelacional: string;
   idDocumento: string;

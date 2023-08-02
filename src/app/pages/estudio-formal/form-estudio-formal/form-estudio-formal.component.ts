@@ -36,7 +36,7 @@ export class FormEstudioFormalComponent implements OnInit {
   idProceso = '00025';
   archivo = new DatoArchivo();
   postulante: DatosPersonal;
-  @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
+  @ViewChild(UploadFilesComponent) upload: UploadFilesComponent
 
 
   form: FormGroup = new FormGroup({
@@ -63,12 +63,12 @@ export class FormEstudioFormalComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
-    private datosService:DatosService,
+    private datosService: DatosService,
     private datosPersonalService: DatosPersonalService
   ) { }
 
   ngOnInit(): void {
-    this.idUserWeb = sessionStorage.getItem('ID-USER');
+    this.idUserWeb = sessionStorage.getItem('usuario');
     this.idEstudio = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idEstudio);
     this.getDatosPostulante();
@@ -80,18 +80,18 @@ export class FormEstudioFormalComponent implements OnInit {
 
   }
 
-  getDatosPostulante(){
+  getDatosPostulante() {
     this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
-    .subscribe(data=>{
-      this.postulante = data;
-    })
+      .subscribe(data => {
+        this.postulante = data;
+      })
   }
 
   onSelectInstitucion(dato: string) {
     this.getCarreras(dato);
   }
 
-  getCarreras(dato:string){
+  getCarreras(dato: string) {
     this.datosService.getCarreras(dato).subscribe(data => {
 
       this.tiposEstudio = data
@@ -99,13 +99,13 @@ export class FormEstudioFormalComponent implements OnInit {
     });
   }
 
-  getModalidad(){
+  getModalidad() {
     this.datosService.getGradoIntruccion().subscribe(data => {
       this.tiposModalidad = data
     });
   }
 
-  getInstituciones(){
+  getInstituciones() {
     this.datosService.getInstituciones().subscribe(data => {
       this.tiposCentro = data
     });
@@ -113,13 +113,13 @@ export class FormEstudioFormalComponent implements OnInit {
 
 
 
-  getTiposSituacion(){
+  getTiposSituacion() {
     this.menuService.getTiposSituacion().subscribe(data => {
       this.tiposSituacion = data
     });
   }
 
-  getTiposTiempo(){
+  getTiposTiempo() {
     this.menuService.getTiposTiempo().subscribe(data => {
       this.tiposTiempo = data
     });
@@ -209,7 +209,7 @@ export class FormEstudioFormalComponent implements OnInit {
         this.archivo.idCodigoRelacional = result.idEntity
         this.archivo.idProceso = this.idProceso
         this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
-        this.archivo.numeroDocumento= this.postulante.numeroDocumento
+        this.archivo.numeroDocumento = this.postulante.numeroDocumento
         this.upload.uploadFiles(this.archivo);
 
         if (this.idEstudio == null) {

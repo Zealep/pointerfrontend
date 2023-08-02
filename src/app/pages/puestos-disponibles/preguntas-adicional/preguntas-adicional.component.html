@@ -1,0 +1,28 @@
+<div class="container">
+  <span><strong>Preguntas de seleccion</strong></span>
+  <p>Para poder terminar de inscribirte, debes responder las siguientes preguntas</p>
+  <div>
+    <form>
+      <div class="row" *ngFor=" let p of preguntasRequisicion;let i=index">
+        <div [formGroup]="getGroup(i)">
+          <mat-card style="margin: 0.5rem;">
+            <div [innerHTML]="i+1+') ' + p.pregunta.enunciado" style="font-weight: bold;">
+            </div>
+            <div>
+
+              <mat-form-field class="text-area-field">
+                <mat-label>Comenta tu respuesta</mat-label>
+                <textarea matInput formControlName="respuesta"></textarea>
+              </mat-form-field>
+
+            </div>
+          </mat-card>
+
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <button mat-raised-button (click)="close()">Volver</button>
+  <button class="ms-3" mat-raised-button color="primary" (click)="save()">Inscribirte</button>
+</div>

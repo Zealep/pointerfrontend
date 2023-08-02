@@ -5,8 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsuarioService } from './../../../services/usuario.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { EMPTY } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -15,51 +16,45 @@ import { EMPTY } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
+  invalidLogin = false
+
+  @Input() error: string | null | undefined;
+
   form: FormGroup = new FormGroup({
     correo: new FormControl('', Validators.required),
     contraseña: new FormControl('', Validators.required)
   });
 
   constructor(private router: Router,
-    private usuarioService: UsuarioService,
-    private snackBar: MatSnackBar) { }
+    private loginservice: AuthenticationService) { }
 
   ngOnInit() {
   }
 
   submit() {
-    if(this.form.valid) {
-      this.validateLogin(this.form.value);
+    if (this.form.valid) {
+      this.checkLogin();
     }
   }
 
-  private validateLogin(user: Usuario) {
 
-    this.usuarioService.login(user.correo,user.contraseña)
-    .pipe(
-      catchError(response => {
-        console.log('error captcheado login',response);
-      this.snackBar.open(response, 'Cerrar', {
-        duration: 3000,
-        horizontalPosition: 'center',
-       verticalPosition: 'top'
-      });
-      // catch & replace
-      return EMPTY;
-      })
-      )
-    .subscribe(data =>{
-      if(data){
-        this.usuarioService.getByCorreo(user.correo)
-        .subscribe(result =>{
-          let token = JSON.stringify(data);
-        sessionStorage.setItem(TOKEN_NAME, token);
-        sessionStorage.setItem('ID-USER',result.idUsuarioWeb)
-        this.router.navigate(['pages']);
-        })
+  checkLogin() {
+    let username: string = this.form.get('correo')?.value;
+    let clave: string = this.form.get('contraseña')?.value;
+
+    (this.loginservice.authenticate(username.trim(), clave.trim()).subscribe(
+      data => {
+        this.router.navigate(['pages'])
+        this.invalidLogin = false
+      },
+      error => {
+        this.invalidLogin = true
+        this.error = error.error.message;
 
       }
-    });
+    )
+    );
 
   }
+
 }

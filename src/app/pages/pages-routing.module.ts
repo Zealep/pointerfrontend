@@ -15,6 +15,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ExperienciaLaboralComponent } from './experiencia-laboral/experiencia-laboral.component';
 import { EstudioFormalComponent } from './estudio-formal/estudio-formal.component';
 import { PuestosDisponiblesComponent } from './puestos-disponibles/puestos-disponibles.component';
+import { AuthGaurdService } from '../services/auth-gaurd.service';
 
 
 const routes: Routes = [
@@ -30,62 +31,62 @@ const routes: Routes = [
       {
         path: 'datos-personales',
         component: DatosPersonalesComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'exp-laboral',
         component: ExperienciaLaboralComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'exp-laboral/form',
         component: FormExperienciaLaboralComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'edu-formal',
         component: EstudioFormalComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'edu-formal/form',
         component: FormEstudioFormalComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'edu-noformal',
         component: EstudioNoformalComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'edu-noformal/form',
         component: FormEstudioNoFormalComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'idiomas',
         component: IdiomaComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'idiomas/form',
         component: FormIdiomaComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'familiares',
         component: FamiliaComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'familiares/form',
         component: FormFamiliaComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
       {
         path: 'puestos',
         component: PuestosDisponiblesComponent,
-        canActivate: [GuardService]
+        canActivate: [AuthGaurdService]
       },
 
 

@@ -82,7 +82,7 @@ export class FormExperienciaLaboralComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.idUserWeb = sessionStorage.getItem('ID-USER');
+    this.idUserWeb = sessionStorage.getItem('usuario');
     this.idExperiencia = this.route.snapshot.paramMap.get('exp');
     this.cargar(this.idExperiencia);
     this.getPais();
@@ -98,12 +98,12 @@ export class FormExperienciaLaboralComponent implements OnInit {
     let i = this.form.get('fechaIngreso').value;
     let r = this.form.get('fechaRetiro').value;
 
-    if(i !='' && r !=''){
+    if (i != '' && r != '') {
 
       let ingreso = moment(new Date(i));
       let retiro = moment(new Date(r));
 
-      if(ingreso.isAfter(retiro)){
+      if (ingreso.isAfter(retiro)) {
         alert('La fecha de ingreso no puede ser mayor a la fecha de retiro')
         return;
       }

@@ -18,42 +18,71 @@ export class UploadFileService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  upload(formData: FormData){
+  upload(formData: FormData) {
     var request = new XMLHttpRequest();
     request.open('POST', `${this.baseUrl}/save`, false);  // `false`
     request.send(formData);
     //return this.http.post<ResponseApi>(`${this.baseUrl}/save`,formData).toPromise();
   }
 
-  getFiles(id:string,proceso:string){
+  uploadList(formData: FormData) {
+    return this.http.post<ResponseApi>(`${this.baseUrl}/saveList`, formData
+    )
+      .pipe(
+        catchError(this.handleError));
+  }
+
+  getFiles(id: string, proceso: string) {
     return this.http.get<DatoArchivo[]>(`${this.baseUrl}/getByCodigoRelacional/${id}/${proceso}`);
   }
 
 
   download(path: string): Observable<Blob> {
     let parms = new HttpParams();
-    parms = parms.append('url',path);
+    parms = parms.append('url', path);
     return this.http.get(`${this.baseUrl}/getFile`,
       {
-        params:parms,
+        params: parms,
         responseType: 'blob'
-    });
+      });
   }
 
-  deleteFile(path: string,id:string) {
+  downloadByProceso(path: string, proceso: string): Observable<Blob> {
     let parms = new HttpParams();
-    parms = parms.append('url',path);
-    parms = parms.append('id',id);
+    parms = parms.append('url', path);
+    parms = parms.append('proceso', proceso);
+    return this.http.get(`${this.baseUrl}/getFile/proceso`,
+      {
+        params: parms,
+        responseType: 'blob'
+      });
+  }
+
+  deleteFile(path: string, id: string) {
+    let parms = new HttpParams();
+    parms = parms.append('url', path);
+    parms = parms.append('id', id);
     return this.http.get<ResponseApi>(`${this.baseUrl}/deleteFile`,
-    {
-      params:parms
-    }
-  );
+      {
+        params: parms
+      }
+    );
+  }
+
+  delete(path: string, id: string) {
+    let parms = new HttpParams();
+    parms = parms.append('url', path);
+    parms = parms.append('id', id);
+    return this.http.get<ResponseApi>(`${this.baseUrl}/delete`,
+      {
+        params: parms
+      }
+    );
   }
 
 
   private handleError(error: HttpErrorResponse) {
-    if(error.error instanceof ErrorEvent) {
+    if (error.error instanceof ErrorEvent) {
       console.log('Client error', error.error.message);
     } else {
       // Error en el lado del servidor

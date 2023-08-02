@@ -10,11 +10,13 @@ import { AltaUserComponent } from './components/login/alta-user/alta-user.compon
 import { RestorePassComponent } from './components/login/restore-pass/restore-pass.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 import { OportunidadLaboralComponent } from './components/oportunidad-laboral/oportunidad-laboral.component';
+import { VerDetalleEmpleoComponent } from './components/oportunidad-laboral/ver-detalle-empleo/ver-detalle-empleo.component';
+import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, HeaderComponent, ConfirmDialogComponent, AltaUserComponent, RestorePassComponent, UploadFilesComponent, OportunidadLaboralComponent],
+  declarations: [LoginComponent, HeaderComponent, ConfirmDialogComponent, AltaUserComponent, RestorePassComponent, UploadFilesComponent, OportunidadLaboralComponent, VerDetalleEmpleoComponent, ProgressSpinnerComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -25,7 +27,9 @@ import { OportunidadLaboralComponent } from './components/oportunidad-laboral/op
   exports: [
     HeaderComponent,
     ConfirmDialogComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    ProgressSpinnerComponent
+
   ],
   entryComponents: [ConfirmDialogComponent]
 

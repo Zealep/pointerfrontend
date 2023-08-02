@@ -18,11 +18,12 @@ import { FamiliaComponent } from './familia/familia.component';
 import { FormFamiliaComponent } from './familia/form-familia/form-familia.component';
 import { FormIdiomaComponent } from './idioma/form-idioma/form-idioma.component';
 import { PuestosDisponiblesComponent } from './puestos-disponibles/puestos-disponibles.component';
+import { PreguntasAdicionalComponent } from './puestos-disponibles/preguntas-adicional/preguntas-adicional.component';
 
 
 
 @NgModule({
-  declarations: [DatosPersonalesComponent, ExperienciaLaboralComponent, FormExperienciaLaboralComponent, EstudioFormalComponent, EstudioNoformalComponent, FormEstudioNoFormalComponent, FormEstudioFormalComponent, IdiomaComponent, FamiliaComponent, FormFamiliaComponent, FormIdiomaComponent, PuestosDisponiblesComponent],
+  declarations: [DatosPersonalesComponent, ExperienciaLaboralComponent, FormExperienciaLaboralComponent, EstudioFormalComponent, EstudioNoformalComponent, FormEstudioNoFormalComponent, FormEstudioFormalComponent, IdiomaComponent, FamiliaComponent, FormFamiliaComponent, FormIdiomaComponent, PuestosDisponiblesComponent, PreguntasAdicionalComponent],
   imports: [
     CommonModule,
     FormsModule,

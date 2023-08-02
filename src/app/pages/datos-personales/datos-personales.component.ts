@@ -42,8 +42,8 @@ export class DatosPersonalesComponent implements OnInit {
   distritoResidencia: Combo[] = [];
   idUserWeb: string;
   areas: Combo[] = [];
-  areasPostulante: AreaInteresDTO[]=[];
-  displayedColumns: string[] = ['nombre','acciones'];
+  areasPostulante: AreaInteresDTO[] = [];
+  displayedColumns: string[] = ['nombre', 'acciones'];
   idProceso = '00024';
   archivo = new DatoArchivo();
   postulante = new DatosPersonal();
@@ -51,14 +51,13 @@ export class DatosPersonalesComponent implements OnInit {
   discapacidades: Combo[] = [];
   tipoDiscapacidad: string;
   porcentageDiscapacidad: number;
-  displayedColumnsDisca: string[] = ['discapacidad','porcentaje','accionesDisca'];
-  discapacidadPostulante: DiscapacidadDTO[]=[];
+  displayedColumnsDisca: string[] = ['discapacidad', 'porcentaje', 'accionesDisca'];
+  discapacidadPostulante: DiscapacidadDTO[] = [];
 
-  @ViewChild(UploadFilesComponent) upload:UploadFilesComponent
+  @ViewChild(UploadFilesComponent) upload: UploadFilesComponent
 
   dataAreas: MatTableDataSource<AreaInteresDTO>;
   dataDiscapacidad: MatTableDataSource<DiscapacidadDTO>;
-
 
   tipoVia: Combo[] = [];
   tipoZona: Combo[] = [];
@@ -117,7 +116,8 @@ export class DatosPersonalesComponent implements OnInit {
     private discapacidadService: DiscapacidadService) { }
 
   ngOnInit(): void {
-    this.idUserWeb = sessionStorage.getItem('ID-USER');
+
+    this.idUserWeb = sessionStorage.getItem('usuario');
     this.getIdPostulante();
     this.getTiposDocumentos();
     this.getGeneros();
@@ -135,11 +135,11 @@ export class DatosPersonalesComponent implements OnInit {
     this.getDiscapacidades();
   }
 
-  getDatosPostulante(){
+  getDatosPostulante() {
     this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
-    .subscribe(data=>{
-      this.postulante = data;
-    })
+      .subscribe(data => {
+        this.postulante = data;
+      })
   }
 
   onSelectPaisNacimiento(dato: string) {
@@ -166,12 +166,10 @@ export class DatosPersonalesComponent implements OnInit {
     this.getDistritoResidencia(dato);
   }
 
-  refreshDataSource(){
+  refreshDataSource() {
     this.dataAreas = new MatTableDataSource(this.areasPostulante);
 
   }
-
-
 
   getTiposDocumentos() {
     this.tipoDocumentoService.getUsers().subscribe(data => {
@@ -269,54 +267,54 @@ export class DatosPersonalesComponent implements OnInit {
     });
   }
 
-  getAreas(){
+  getAreas() {
     this.menuService.getAreas().subscribe(data => {
       this.areas = data
     });
   }
 
-  getAreasByPostulante(){
+  getAreasByPostulante() {
     this.areaInteresService.getAreasDTOByPostulante(this.idUserWeb)
-    .subscribe(datos =>{
-       this.dataAreas = new MatTableDataSource(datos);
+      .subscribe(datos => {
+        this.dataAreas = new MatTableDataSource(datos);
         this.areasPostulante = datos;
-    })
+      })
   }
 
-  getDiscapacidadByPostulante(){
+  getDiscapacidadByPostulante() {
     this.discapacidadService.getDiscapacidadesDTOByPostulante(this.idUserWeb)
-    .subscribe(datos =>{
-      this.dataDiscapacidad = new MatTableDataSource(datos);
+      .subscribe(datos => {
+        this.dataDiscapacidad = new MatTableDataSource(datos);
         this.discapacidadPostulante = datos;
+      })
+  }
+
+  borrarArea(id: string) {
+    this.areaInteresService.delete(id)
+      .subscribe(x => {
+        this.getAreasByPostulante();
+      })
+  }
+
+  borrarDiscapacidad(id: string) {
+    this.discapacidadService.delete(id)
+      .subscribe(x => {
+        this.getDiscapacidadByPostulante();
+      })
+  }
+
+  agregarDiscapacidad() {
+    if (this.tipoDiscapacidad == null || this.porcentageDiscapacidad == null) {
+      alert("Ingresa todos los datos de la discapacidad")
+    }
+    let d = new Discapacidad();
+    d.idPostulante = this.idUserWeb;
+    d.idTipoDiscapacidad = this.tipoDiscapacidad;
+    d.porcentajeDiscapacidad = this.porcentageDiscapacidad;
+    this.discapacidadService.save(d).subscribe(x => {
+      this.getDiscapacidadByPostulante();
     })
   }
-
-  borrarArea(id:string){
-    this.areaInteresService.delete(id)
-    .subscribe(x =>{
-      this.getAreasByPostulante();
-  })
-}
-
-borrarDiscapacidad(id:string){
-  this.discapacidadService.delete(id)
-  .subscribe(x =>{
-    this.getDiscapacidadByPostulante();
-})
-}
-
-agregarDiscapacidad(){
-  if(this.tipoDiscapacidad == null || this.porcentageDiscapacidad == null){
-    alert("Ingresa todos los datos de la discapacidad")
-  }
-  let  d = new Discapacidad();
-  d.idPostulante = this.idUserWeb;
-  d.idTipoDiscapacidad = this.tipoDiscapacidad;
-  d.porcentajeDiscapacidad = this.porcentageDiscapacidad;
-  this.discapacidadService.save(d).subscribe(x=>{
-    this.getDiscapacidadByPostulante();
-  })
-}
 
   cargar() {
 
@@ -332,12 +330,12 @@ agregarDiscapacidad(){
       .subscribe(dato => {
 
         this.onSelectPaisNacimiento(dato.idDatoPaisNacimiento);
-        this.onSelectDepartamentoNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento);
-        this.onSelectProvinciaNacimiento(dato.idDatoPaisNacimiento+dato.idDptoNacimiento+dato.idProvNacimiento);
+        this.onSelectDepartamentoNacimiento(dato.idDatoPaisNacimiento + dato.idDptoNacimiento);
+        this.onSelectProvinciaNacimiento(dato.idDatoPaisNacimiento + dato.idDptoNacimiento + dato.idProvNacimiento);
 
         this.onSelectPaisResidencia(dato.idDatoPaisResidencia);
-        this.onSelectDepartamentoResidencia(dato.idDatoPaisResidencia+dato.idDptoResidencia);
-        this.onSelectProvinciaResidencia(dato.idDatoPaisResidencia+dato.idDptoResidencia+dato.idProvResidencia);
+        this.onSelectDepartamentoResidencia(dato.idDatoPaisResidencia + dato.idDptoResidencia);
+        this.onSelectProvinciaResidencia(dato.idDatoPaisResidencia + dato.idDptoResidencia + dato.idProvResidencia);
 
 
         this.form = new FormGroup({
@@ -375,14 +373,15 @@ agregarDiscapacidad(){
           'expectativaSalarial': new FormControl(dato.expectativaSalarial),
           'idMedioInformativo': new FormControl(dato.idMedioInformativo),
           'indTieneDiscapacidad': new FormControl(dato.indTieneDiscapacidad),
-          'numeroConadis': new FormControl(dato.numeroConadis)        });
+          'numeroConadis': new FormControl(dato.numeroConadis)
+        });
       })
   }
-  getIdPostulante(){
+  getIdPostulante() {
     this.datosPersonalService.getDatosByIdUserWeb(this.idUserWeb)
-    .subscribe(data=>{
-      this.idPostulante = data.idPostulante;
-    })
+      .subscribe(data => {
+        this.idPostulante = data.idPostulante;
+      })
   }
 
   grabar() {
@@ -443,7 +442,7 @@ agregarDiscapacidad(){
         this.archivo.idCodigoRelacional = result.idEntity
         this.archivo.idProceso = this.idProceso
         this.archivo.idTipoDocumentoIdentidad = this.postulante.tipoDocumentosIdentidad.idTipoDocumentoIdentidad
-        this.archivo.numeroDocumento= this.postulante.numeroDocumento
+        this.archivo.numeroDocumento = this.postulante.numeroDocumento
         this.upload.uploadFiles(this.archivo);
 
         this.snackBar.open('Los datos personales del postulante fueron actualizados', 'Cerrar', {
@@ -457,19 +456,19 @@ agregarDiscapacidad(){
 
   }
 
-  select(a){
+  select(a) {
     let area = new AreaInteres();
     area.idPostulante = this.idPostulante;
     area.idAreaAspira = a;
     this.areaInteresService.save(area)
-    .subscribe(x =>{
-      this.getAreasByPostulante();
-      this.refreshDataSource();
-    })
+      .subscribe(x => {
+        this.getAreasByPostulante();
+        this.refreshDataSource();
+      })
 
   }
 
-  loadAreas(){
+  loadAreas() {
 
   }
   clear() {

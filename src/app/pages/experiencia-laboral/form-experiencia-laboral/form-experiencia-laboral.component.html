@@ -1,6 +1,9 @@
 <mat-card class="container">
   <mat-card-header>
-    Datos de la experiencia laboral
+    <mat-card-title>
+
+      Datos de la experiencia laboral
+    </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form">
@@ -81,14 +84,16 @@
 
         <mat-form-field appearance="outline" fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Fecha de ingreso</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fechaIngreso" (dateChange)="calcularTiempo($event)" required>
+          <input matInput [matDatepicker]="picker" formControlName="fechaIngreso" (dateChange)="calcularTiempo($event)"
+            required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="calc(50%-40px)" appearance="outline" >
+        <mat-form-field appearance="outline" fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Fecha de retiro</mat-label>
-          <input matInput [matDatepicker]="picker2" formControlName="fechaRetiro" (dateChange)="calcularTiempo($event)" required>
+          <input matInput [matDatepicker]="picker2" formControlName="fechaRetiro" (dateChange)="calcularTiempo($event)"
+            required>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
@@ -100,17 +105,17 @@
             <mat-radio-button value="N">No</mat-radio-button>
           </mat-radio-group>
         </div>
-        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline"  >
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Años trabajo</mat-label>
           <input type="number" matInput formControlName="añosTrabajados" required readonly>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline" >
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Meses trabajo</mat-label>
           <input type="number" matInput formControlName="mesesTrabajados" required readonly>
         </mat-form-field>
 
-        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline" >
+        <mat-form-field fxFlex="calc(50%-40px)" appearance="outline">
           <mat-label>Dias trabajo</mat-label>
           <input type="number" matInput formControlName="diasTrabajados" required readonly>
         </mat-form-field>
@@ -152,7 +157,7 @@
           </mat-select>
         </mat-form-field>
 
-        <div fxFlex="calc(50%-40px)" fxLayout="column" >
+        <div fxFlex="calc(50%-40px)" fxLayout="column">
           <mat-label>Manejó Personal?</mat-label>
           <mat-radio-group formControlName="manejoPersonal" fxLayoutGap="20px">
             <mat-radio-button value="S">Si</mat-radio-button>
@@ -196,15 +201,15 @@
           <mat-label>Numero de folio</mat-label>
           <input matInput formControlName="numeroFolio">
         </mat-form-field>
-      <div class="upload">
-        <app-upload-files [id]="this.idExperiencia" [idProceso]="this.idProceso">
-        </app-upload-files>
-      </div>
+        <div class="upload">
+          <app-upload-files [id]="this.idExperiencia" [idProceso]="this.idProceso">
+          </app-upload-files>
+        </div>
 
       </div>
     </form>
   </mat-card-content>
-  <mat-card-actions >
+  <mat-card-actions>
     <div fxLayout="row wrap" fxLayoutGap="40px">
       <button fxFlex="calc(50%-40px)" mat-raised-button color="primary" (click)="grabar()">
         Registrar
